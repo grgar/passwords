@@ -3,6 +3,8 @@ import SwiftUI
 struct ChangePasswordURLs: View {
 	@State var response: [String: URL] = [:]
 	@State var error: Error?
+	
+	@State var searchText = ""
 
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
@@ -27,6 +29,10 @@ struct ChangePasswordURLs: View {
 	}
 
 	var body: some View {
+		let responses = response
+			.sorted { $0.key.lexicographicallyPrecedes($1.key) }
+			.filter { searchText == "" || $0.key.localizedCaseInsensitiveContains(searchText) }
+		
 		List {
 			if let error {
 				Section("Error") {
@@ -39,7 +45,7 @@ struct ChangePasswordURLs: View {
 					}
 				}
 			}
-			ForEach(response.sorted(by: { $0.key.lexicographicallyPrecedes($1.key) }), id: \.key) { response in
+			ForEach(responses, id: \.key) { response in
 				Link(destination: response.value) {
 					Label {
 						LabeledContent {
@@ -79,6 +85,15 @@ struct ChangePasswordURLs: View {
 				.foregroundStyle(.foreground)
 			}
 		}
+		.searchable(text: $searchText, prompt: Text("Search Domains"))
+		.searchSuggestions {
+			if !searchText.contains(".") {
+				ForEach(responses, id: \.key) { response in
+					Text(response.key)
+						.searchCompletion(response.key)
+				}
+			}
+		}
 		.refreshable {
 			await reload()
 		}
@@ -86,6 +101,7 @@ struct ChangePasswordURLs: View {
 			guard response.isEmpty else { return }
 			await reload()
 		}
+		.navigationTitle(Text("Change Password"))
 	}
 }
 
@@ -94,7 +110,9 @@ struct ChangePasswordURLs: View {
 }
 
 #Preview("Remote") {
-	ChangePasswordURLs()
+	NavigationStack {
+		ChangePasswordURLs()
+	}
 }
 
 #Preview("Error") {
