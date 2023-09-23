@@ -105,13 +105,15 @@ struct SharedCredentials: View {
 }
 
 #Preview("Local") {
-	SharedCredentials(response: [
-		.init(shared: ["example.com"]),
-		.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: false),
-		.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true),
-		.init(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true),
-		.init(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
-		.init(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
-		.init(shared: ["a.com", "b.com", "c.com", "d.com"]),
-	])
+	NavigationStack {
+		SharedCredentials(response: [
+			.init(shared: ["example.com"]),
+			.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: false),
+			.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true),
+			.init(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true),
+			.init(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
+			.init(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
+			.init(shared: ["a.com", "b.com", "c.com", "d.com"]),
+		])
+	}
 }
