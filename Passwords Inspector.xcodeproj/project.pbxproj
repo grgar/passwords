@@ -11,6 +11,8 @@
 		1717C4A02ABA44EC00AD991A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C49F2ABA44EC00AD991A /* ContentView.swift */; };
 		1717C4A22ABA44ED00AD991A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1717C4A12ABA44ED00AD991A /* Assets.xcassets */; };
 		1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */; };
+		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
+		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		1717C4A12ABA44ED00AD991A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1717C4A32ABA44ED00AD991A /* PI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PI.entitlements; sourceTree = "<group>"; };
 		1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordURLs.swift; sourceTree = "<group>"; };
+		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
+		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +43,8 @@
 				1717C49D2ABA44EC00AD991A /* PIApp.swift */,
 				1717C49F2ABA44EC00AD991A /* ContentView.swift */,
 				1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */,
+				17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */,
+				17BFF7012ABF217D004047AD /* Favicon.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
 				1717C4A32ABA44ED00AD991A /* PI.entitlements */,
 				1717C49B2ABA44EC00AD991A /* Products */,
@@ -125,6 +131,8 @@
 				1717C4A02ABA44EC00AD991A /* ContentView.swift in Sources */,
 				1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */,
 				1717C49E2ABA44EC00AD991A /* PIApp.swift in Sources */,
+				17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */,
+				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

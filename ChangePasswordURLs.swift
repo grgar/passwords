@@ -3,8 +3,10 @@ import SwiftUI
 struct ChangePasswordURLs: View {
 	@State var response: [String: URL] = [:]
 	@State var error: Error?
-	
+
 	@State var searchText = ""
+
+	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/change-password-URLs.json")!
 
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
@@ -15,8 +17,6 @@ struct ChangePasswordURLs: View {
 			self.error = error
 		}
 	}
-
-	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/change-password-URLs.json")!
 
 	static func reload(cache: NSURLRequest.CachePolicy) async -> Result<[String: URL], Error> {
 		do {
@@ -32,7 +32,7 @@ struct ChangePasswordURLs: View {
 		let responses = response
 			.sorted { $0.key.lexicographicallyPrecedes($1.key) }
 			.filter { searchText == "" || $0.key.localizedCaseInsensitiveContains(searchText) }
-		
+
 		List {
 			if let error {
 				Section("Error") {
@@ -58,28 +58,8 @@ struct ChangePasswordURLs: View {
 							Text(response.value.relativePath)
 								.foregroundStyle(.secondary)
 						}
-						.alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] }
 					} icon: {
-						AsyncImage(url: URL(string: "https://\(response.key)/favicon.ico")) { phase in
-							if let image = phase.image {
-								image
-									.resizable()
-									.scaledToFit()
-							} else if let error = phase.error {
-								Image(systemName: "ellipsis.circle")
-									.resizable()
-									.scaledToFit()
-									.opacity(0)
-									.accessibilityHidden(true)
-							} else {
-								Image(systemName: "ellipsis.circle")
-									.resizable()
-									.scaledToFit()
-									.redacted(reason: .placeholder)
-									.accessibilityHidden(true)
-							}
-						}
-						.alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] }
+						Favicon(domain: response.key)
 					}
 				}
 				.foregroundStyle(.foreground)
@@ -99,7 +79,7 @@ struct ChangePasswordURLs: View {
 		}
 		.task {
 			guard response.isEmpty else { return }
-			await reload()
+			await reload(cache: .returnCacheDataElseLoad)
 		}
 		.navigationTitle(Text("Change Password"))
 	}

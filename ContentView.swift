@@ -16,7 +16,7 @@ struct ContentView: View {
 				}
 
 				NavigationLink {
-					EmptyView()
+					SharedCredentials()
 				} label: {
 					LabeledContent {
 						EmptyView()
