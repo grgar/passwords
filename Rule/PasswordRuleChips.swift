@@ -9,10 +9,10 @@ struct PasswordRuleChips: View {
 				if let minLength = rule.minLength {
 					Image(systemName: "\(minLength).square")
 				}
-				if rule.minLength != nil && rule.maxLength != nil {
+				if rule.minLength != nil, let max = rule.maxLength, max <= 50 {
 					Text("–")
 				}
-				if let maxLength = rule.maxLength {
+				if let maxLength = rule.maxLength, maxLength <= 50 {
 					Image(systemName: "\(maxLength).square")
 				}
 			}

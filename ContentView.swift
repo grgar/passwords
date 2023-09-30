@@ -65,6 +65,8 @@ struct ContentView: View {
 				}
 			}
 			.listStyle(.sidebar)
+		} content: {
+			EmptyView()
 		} detail: {
 			EmptyView()
 		}

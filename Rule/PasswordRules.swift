@@ -68,7 +68,7 @@ struct PasswordRules: View {
 				List {
 					ForEach(responses) { rule in
 						NavigationLink {
-							Text("Destination")
+							PasswordRuleDetail(rule: rule)
 						} label: {
 							Label {
 								LabeledContent {} label: {

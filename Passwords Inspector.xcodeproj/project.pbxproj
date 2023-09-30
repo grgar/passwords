@@ -14,6 +14,7 @@
 		173245232AC4CE99005C3AC2 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245222AC4CE99005C3AC2 /* Rule.swift */; };
 		173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */; };
 		17618B7C2AC200C600B31C28 /* PasswordRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17618B7B2AC200C600B31C28 /* PasswordRules.swift */; };
+		17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */; };
 		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
@@ -29,6 +30,7 @@
 		173245222AC4CE99005C3AC2 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleChips.swift; sourceTree = "<group>"; };
 		17618B7B2AC200C600B31C28 /* PasswordRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRules.swift; sourceTree = "<group>"; };
+		17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleDetail.swift; sourceTree = "<group>"; };
 		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
 		17BFF7032ABF7D50004047AD /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				173245222AC4CE99005C3AC2 /* Rule.swift */,
 				17618B7B2AC200C600B31C28 /* PasswordRules.swift */,
 				173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */,
+				17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */,
 			);
 			path = Rule;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */,
 				1717C49E2ABA44EC00AD991A /* PIApp.swift in Sources */,
 				17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */,
+				17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */,
 				173245232AC4CE99005C3AC2 /* Rule.swift in Sources */,
 				17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */,
 				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
@@ -312,7 +316,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.georgegarside.Passwords-Inspector";
+				PRODUCT_BUNDLE_IDENTIFIER = com.georgegarside.passwordsinspector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -349,7 +353,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.georgegarside.Passwords-Inspector";
+				PRODUCT_BUNDLE_IDENTIFIER = com.georgegarside.passwordsinspector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

@@ -1,4 +1,5 @@
 import Foundation
+import RegexBuilder
 
 struct Rule: Identifiable {
 	let id: String
@@ -10,7 +11,7 @@ struct Rule: Identifiable {
 	var allowed = Set<PasswordCharacter>()
 
 	enum PasswordCharacter: LosslessStringConvertible, Hashable, CaseIterable, Comparable, Identifiable {
-		case lower, upper, digit, special, unicode, other(CharacterSet)
+		case lower, upper, digit, special, unicode, other(Set<Character>)
 
 		init?(_ description: String) {
 			switch description {
@@ -25,7 +26,9 @@ struct Rule: Identifiable {
 			case "unicode":
 				self = .unicode
 			default:
-				self = .other(CharacterSet(charactersIn: description))
+				self = .other(description.reduce(into: Set<Character>()) { partialResult, character in
+					partialResult.insert(character)
+				})
 			}
 		}
 
@@ -36,10 +39,10 @@ struct Rule: Identifiable {
 			case .digit: return "digit"
 			case .special: return "special"
 			case .unicode: return "unicode"
-			case let .other(set): return set.description
+			case let .other(set): return set.sorted().map(String.init).joined()
 			}
 		}
-		
+
 		var symbol: String? {
 			switch self {
 			case .lower: return "textformat.abc"
@@ -49,9 +52,9 @@ struct Rule: Identifiable {
 			default: return nil
 			}
 		}
-		
-		var id: String { description }
-		
+
+		var id: String { self.description }
+
 		var isPredefined: Bool {
 			switch self {
 			case .lower, .upper, .digit, .special, .unicode:
@@ -60,17 +63,20 @@ struct Rule: Identifiable {
 				return false
 			}
 		}
-		
+
 		static let allCases: [Rule.PasswordCharacter] = [.upper, .lower, .digit, .special, .unicode, .other(.init())]
 
 		static func < (lhs: Rule.PasswordCharacter, rhs: Rule.PasswordCharacter) -> Bool {
 			switch (lhs.isPredefined, rhs.isPredefined) {
-			case (false, false), (false, true):
+			case (false, false):
+				guard case let .other(set1) = lhs, case let .other(set2) = rhs else { return false }
+				return set1.sorted().map(String.init).joined() < set2.sorted().map(String.init).joined()
+			case (false, true):
 				return false
 			case (true, false):
 				return true
 			case (true, true):
-				return (allCases.firstIndex(of: lhs) ?? 0) < (allCases.firstIndex(of: rhs) ?? 0)
+				return (self.allCases.firstIndex(of: lhs) ?? 0) < (self.allCases.firstIndex(of: rhs) ?? 0)
 			}
 		}
 	}
@@ -79,8 +85,8 @@ struct Rule: Identifiable {
 extension Rule {
 	init(domain: String, rule originalRule: String) {
 		self = Self(id: domain, originalRule: originalRule)
-		for split in originalRule.split(separator: try! Regex(";(?: |$)"), omittingEmptySubsequences: true) {
-			let split = String(split).split(separator: try! Regex(": ?"), maxSplits: 2)
+		for split in originalRule.split(separator: /;(?: |$)/, omittingEmptySubsequences: true) {
+			let split = String(split).split(separator: /: ?/, maxSplits: 1)
 			if split.count != 2 { continue }
 			switch split[0] {
 			case "minlength":
@@ -105,5 +111,14 @@ extension Rule {
 		}
 		// if it's required, it's always allowed
 		self.allowed.subtract(self.required)
+	}
+}
+
+extension CharacterSet {
+	static let descriptionRegex = /\((.*)\)|Predefined (.*) Set/
+
+	var contents: String {
+		let matches = try? Self.descriptionRegex.firstMatch(in: description)
+		return (matches?.1 ?? matches?.2)?.replacingOccurrences(of: "U+", with: "\\u").applyingTransform(.init("Hex/Unicode-Any"), reverse: false)?.lowercased() ?? description
 	}
 }
