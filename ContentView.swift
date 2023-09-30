@@ -5,7 +5,7 @@ struct ContentView: View {
 		NavigationSplitView {
 			List {
 				NavigationLink {
-					EmptyView()
+					PasswordRules()
 				} label: {
 					Label {
 						LabeledContent {

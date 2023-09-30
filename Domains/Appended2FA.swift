@@ -79,6 +79,14 @@ struct Appended2FA: View {
 				}
 			}
 		}
+		.searchable(text: $searchText, prompt: Text("Search Domains"))
+		.refreshable {
+			await reload()
+		}
+		.task {
+			guard response.isEmpty else { return }
+			await reload(cache: .returnCacheDataElseLoad)
+		}
 		.navigationTitle(Text("Appended 2FA"))
 	}
 }

@@ -23,6 +23,7 @@ struct Favicon: View {
 					.accessibilityHidden(true)
 			}
 		}
+		.accessibilityHidden(true)
 	}
 }
 
