@@ -65,6 +65,19 @@ struct ContentView: View {
 				}
 			}
 			.listStyle(.sidebar)
+			.navigationTitle(Text("Passwords Inspector"))
+			.navigationBarTitleDisplayMode(.inline)
+			.toolbar {
+				ToolbarItemGroup(placement: .principal) {
+					Label {
+						Text("Passwords Inspector")
+					} icon: {
+						Image(systemName: "key.viewfinder")
+					}
+					.labelStyle(.titleAndIcon)
+					.foregroundStyle(.tint, .tertiary)
+				}
+			}
 		} content: {
 			EmptyView()
 		} detail: {
