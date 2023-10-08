@@ -108,6 +108,7 @@ struct PasswordRuleDetail: View {
 			}
 		}
 		.navigationTitle(rule.id)
+		.navigationBarTitleDisplayMode(.large)
 	}
 }
 

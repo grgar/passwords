@@ -17,6 +17,7 @@ struct ContentView: View {
 					} icon: {
 						Image(systemName: "lock.rectangle")
 					}
+					.padding(.vertical)
 				}
 
 				NavigationLink {
@@ -32,6 +33,7 @@ struct ContentView: View {
 					} icon: {
 						Image(systemName: "rectangle.on.rectangle.angled")
 					}
+					.padding(.vertical)
 				}
 
 				NavigationLink {
@@ -47,6 +49,7 @@ struct ContentView: View {
 					} icon: {
 						Image(systemName: "rectangle.and.pencil.and.ellipsis")
 					}
+					.padding(.vertical)
 				}
 
 				NavigationLink {
@@ -62,7 +65,12 @@ struct ContentView: View {
 					} icon: {
 						Image(systemName: "123.rectangle")
 					}
+					.padding(.vertical)
 				}
+			}
+			.scrollContentBackground(.hidden)
+			.background {
+				HomeBackground()
 			}
 			.listStyle(.sidebar)
 			.navigationTitle(Text("Passwords Inspector"))
@@ -72,7 +80,8 @@ struct ContentView: View {
 					Label {
 						Text("Passwords Inspector")
 					} icon: {
-						Image(systemName: "key.viewfinder")
+						Image(systemName: "key.fill")
+							.rotationEffect(.radians(-0.3))
 					}
 					.labelStyle(.titleAndIcon)
 					.foregroundStyle(.tint, .tertiary)
