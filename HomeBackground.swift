@@ -1,22 +1,38 @@
 import SwiftUI
 
 struct HomeBackground: View {
+	let scale: Int = {
+		#if os(macOS)
+		return 48
+		#else
+		return 64
+		#endif
+	}()
+	
+	let padding: Int = {
+		#if os(macOS)
+		return 12
+		#else
+		return 12
+		#endif
+	}()
+	
 	var body: some View {
 		GeometryReader { geometry in
-			Image(systemName: "key.fill", size: .init(width: 64, height: 64), padding: .init(width: 12, height: 24))
+			Image(systemName: "key.fill", size: .init(width: scale, height: scale), padding: .init(width: padding, height: padding * 2))
 				.resizable(resizingMode: .tile)
 				.modifier(InvertIfDark())
 				.opacity(0.05)
-				.frame(width: geometry.size.width * 1.5, height: geometry.size.height * 1.5)
+				.frame(width: geometry.size.width * 2, height: geometry.size.height * 2)
 				.rotationEffect(.radians(-0.3))
-				.offset(x: -geometry.size.width * 0.25, y: -geometry.size.height * 0.25)
+				.offset(x: -geometry.size.width * 0.5, y: -geometry.size.height * 0.5)
 		}
 	}
 }
 
 struct InvertIfDark: ViewModifier {
 	@Environment(\.colorScheme) private var colorScheme
-	
+
 	func body(content: Content) -> some View {
 		if colorScheme == .dark {
 			content.colorInvert()
@@ -26,50 +42,68 @@ struct InvertIfDark: ViewModifier {
 	}
 }
 
+#if canImport(AppKit)
+typealias UIImage = NSImage
+#endif
+
 extension Image {
+	#if canImport(AppKit)
+	init(uiImage: UIImage) {
+		self.init(nsImage: uiImage)
+	}
+	#endif
+
 	init(systemName: String, size: CGSize, padding: CGSize = .zero) {
 		self.init(uiImage: UIImage(systemName: systemName)!.resizeImage(targetSize: size).addImagePadding(padding: padding))
 	}
 }
 
 extension UIImage {
-	// https://stackoverflow.com/a/31314494/1549818
+	#if canImport(AppKit)
+	convenience init?(systemName: String) {
+		self.init(systemSymbolName: systemName, accessibilityDescription: nil)
+	}
+	#endif
+
 	func resizeImage(targetSize: CGSize) -> UIImage {
-		let widthRatio = targetSize.width / size.width
-		let heightRatio = targetSize.height / size.height
-
-		// Figure out what our orientation is, and use that to form the rectangle
-		var newSize: CGSize
-		if widthRatio > heightRatio {
-			newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-		} else {
-			newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+		let scale = min(targetSize.width / size.width, targetSize.height / size.height)
+		let newSize = size.applying(.init(scaleX: scale, y: scale))
+		#if canImport(AppKit)
+		return UIImage(size: newSize, flipped: false) { rect in
+			self.draw(in: rect)
+			return true
 		}
-
-		// This is the rect that we've calculated out and this is what is actually used below
-		let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-		// Actually do the resizing to the rect using the ImageContext stuff
+		#else
 		UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-		draw(in: rect)
+		draw(in: CGRect(origin: .zero, size: newSize))
 		let newImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-
 		return newImage!
+		#endif
 	}
 
-	// https://stackoverflow.com/a/39480016/1549818
 	func addImagePadding(padding: CGSize) -> UIImage {
-		let width = size.width + padding.width
-		let height = size.height + padding.height
-		let origin = CGPoint(x: (width - size.width) / 2, y: (height - size.height) / 2)
-		
-		UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, 0)
-		draw(at: origin)
-		let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext()
+		let newSize = CGSize(
+			width: size.width + padding.width,
+			height: size.height + padding.height
+		)
+		#if canImport(AppKit)
+		return UIImage(size: newSize, flipped: false) { rect in
+			self.draw(
+				in: rect,
+				from: rect,
+				operation: .copy,
+				fraction: 1
+			)
+			return true
+		}
+		#else
+		UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+		draw(at: CGPoint(x: padding.width / 2, y: padding.height / 2))
+		let newImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		
-		return imageWithPadding!
+		return newImage!
+		#endif
 	}
 }
 

@@ -88,7 +88,9 @@ struct Appended2FA: View {
 			await reload(cache: .returnCacheDataElseLoad)
 		}
 		.navigationTitle(Text("Appended 2FA"))
+		#if os(iOS)
 		.navigationBarTitleDisplayMode(.large)
+		#endif
 	}
 }
 

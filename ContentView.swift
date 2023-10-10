@@ -76,7 +76,9 @@ struct ContentView: View {
 			}
 			.listStyle(.sidebar)
 			.navigationTitle(Text("Passwords Inspector"))
+			#if os(iOS)
 			.navigationBarTitleDisplayMode(.inline)
+			#endif
 			.toolbar {
 				ToolbarItemGroup(placement: .principal) {
 					Label {

@@ -101,7 +101,9 @@ struct SharedCredentials: View {
 			await reload(cache: .returnCacheDataElseLoad)
 		}
 		.navigationTitle(Text("Shared Credentials"))
+		#if os(iOS)
 		.navigationBarTitleDisplayMode(.large)
+		#endif
 	}
 }
 

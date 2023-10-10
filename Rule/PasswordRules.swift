@@ -120,7 +120,9 @@ struct PasswordRules: View {
 			await reload(cache: .returnCacheDataElseLoad)
 		}
 		.navigationTitle(Text("Password Rules"))
+		#if os(iOS)
 		.navigationBarTitleDisplayMode(.large)
+		#endif
 	}
 }
 

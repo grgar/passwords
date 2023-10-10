@@ -82,7 +82,9 @@ struct ChangePasswordURLs: View {
 			await reload(cache: .returnCacheDataElseLoad)
 		}
 		.navigationTitle(Text("Change Password"))
+		#if os(iOS)
 		.navigationBarTitleDisplayMode(.large)
+		#endif
 	}
 }
 

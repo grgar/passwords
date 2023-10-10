@@ -108,7 +108,9 @@ struct PasswordRuleDetail: View {
 			}
 		}
 		.navigationTitle(rule.id)
+		#if os(iOS)
 		.navigationBarTitleDisplayMode(.large)
+		#endif
 	}
 }
 
