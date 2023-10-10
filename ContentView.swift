@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
+	@State private var visibility: NavigationSplitViewVisibility = .all
+
 	var body: some View {
-		NavigationSplitView {
+		NavigationSplitView(columnVisibility: $visibility) {
 			List {
 				NavigationLink {
 					PasswordRules()
