@@ -9,6 +9,8 @@ struct Rule: Identifiable {
 	var maxLength: Int?
 	var required = Set<PasswordCharacter>()
 	var allowed = Set<PasswordCharacter>()
+	
+	var sumLength: Int { (minLength ?? 0) + (maxLength ?? 0) }
 
 	enum PasswordCharacter: LosslessStringConvertible, Hashable, CaseIterable, Comparable, Identifiable {
 		case lower, upper, digit, special, unicode, other(Set<Character>)

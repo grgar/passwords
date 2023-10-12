@@ -2,20 +2,39 @@ import SwiftUI
 
 struct PasswordRuleChips: View {
 	let rule: Rule
+	
+	struct Length: View {
+		let min: Int?
+		let max: Int?
+
+		var body: some View {
+			HStack(spacing: 0) {
+				if let min {
+					Image(systemName: "\(min).square")
+				} else {
+					Image(systemName: "square")
+						.foregroundStyle(.quaternary)
+				}
+				Text("–")
+				if let max {
+					if max <= 50 {
+						Image(systemName: "\(max).square")
+					} else {
+						Text(max.description)
+							.font(.caption)
+							.padding(.horizontal, 2)
+					}
+				} else {
+					Image(systemName: "square")
+						.foregroundStyle(.quaternary)
+				}
+			}
+		}
+	}
 
 	var body: some View {
 		HStack(alignment: .firstTextBaseline) {
-			HStack(spacing: 0) {
-				if let minLength = rule.minLength {
-					Image(systemName: "\(minLength).square")
-				}
-				if rule.minLength != nil, let max = rule.maxLength, max <= 50 {
-					Text("–")
-				}
-				if let maxLength = rule.maxLength, maxLength <= 50 {
-					Image(systemName: "\(maxLength).square")
-				}
-			}
+			Length(min: rule.minLength, max: rule.maxLength)
 			ForEach(rule.required.sorted()) { set in
 				if let symbol = set.symbol {
 					Image(systemName: symbol)

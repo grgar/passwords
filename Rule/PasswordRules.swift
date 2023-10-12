@@ -50,11 +50,15 @@ struct PasswordRules: View {
 	#endif
 
 	@ScaledMetric(wrappedValue: 24, relativeTo: .body) private var faviconHeight
+	
+	@AppStorage("showFavicon") private var showFavicon = true
+	
+	@State private var sortOrder = [KeyPathComparator(\Rule.id)]
 
 	var body: some View {
 		let responses = response
-			.sorted { $0.id.lexicographicallyPrecedes($1.id) }
 			.filter { searchText == "" || $0.id.localizedCaseInsensitiveContains(searchText) }
+			.sorted(using: sortOrder)
 		let isError = Binding(get: {
 			error != nil
 		}, set: {
@@ -83,20 +87,65 @@ struct PasswordRules: View {
 				}
 				.listStyle(.plain)
 			} else {
-				Table(of: Rule.self) {
-					TableColumn("Domain") { domain in
-						Favicon(domain: domain.id)
+				Table(of: Rule.self, sortOrder: $sortOrder) {
+					TableColumn("Domain", value: \.id) { domain in
+						HStack {
+							if showFavicon {
+								Favicon(domain: domain.id)
+									.frame(maxHeight: faviconHeight)
+							}
+							Text(domain.id)
+						}
 					}
-					TableColumn("id", value: \.id)
-					TableColumn("id", value: \.id)
-					TableColumn("id", value: \.id)
-					TableColumn("id", value: \.id)
-					TableColumn("id", value: \.id)
+
+					TableColumn("Length", value: \.sumLength) { domain in
+						if showFavicon {
+							PasswordRuleChips.Length(min: domain.minLength, max: domain.maxLength)
+								.symbolVariant(.fill)
+								.symbolRenderingMode(.hierarchical)
+								.font(.title)
+						} else {
+							Text("\(domain.minLength?.description ?? "?") – \(domain.maxLength?.description ?? "?")")
+						}
+					}
+					.width(min: 48, ideal: 48, max: 64)
+					
+					TableColumn("Required") { domain in
+						HStack {
+							ForEach(domain.required.sorted()) { set in
+								if let symbol = set.symbol {
+									Image(systemName: symbol)
+								} else {
+									Text(set.description)
+								}
+							}
+						}
+					}
+					TableColumn("Allowed") { domain in
+						HStack {
+							ForEach(domain.allowed.sorted()) { set in
+								if let symbol = set.symbol {
+									Image(systemName: symbol)
+								} else {
+									Text(set.description)
+								}
+							}
+						}
+					}
 				} rows: {
 					ForEach(responses) { rule in
 						TableRow(rule)
 					}
 				}
+			}
+		}
+		.toolbar {
+			ToolbarItemGroup(placement: .automatic) {
+				Picker("Favicon", selection: $showFavicon) {
+					Label("Show", systemImage: "checklist.unchecked").tag(true)
+					Label("Hide", systemImage: "list.bullet").tag(false)
+				}
+				.pickerStyle(.segmented)
 			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
@@ -153,4 +202,8 @@ struct RefreshButton: View {
 	NavigationStack {
 		PasswordRules()
 	}
+}
+
+#Preview("Table", traits: .fixedLayout(width: 960, height: 640)) {
+	PasswordRules()
 }
