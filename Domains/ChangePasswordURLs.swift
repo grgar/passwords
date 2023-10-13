@@ -8,6 +8,8 @@ struct ChangePasswordURLs: View {
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/change-password-URLs.json")!
 
+	@AppStorage("showFavicon") private var showFavicon = true
+
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
 		case let .success(data):
@@ -59,10 +61,21 @@ struct ChangePasswordURLs: View {
 								.foregroundStyle(.secondary)
 						}
 					} icon: {
-						Favicon(domain: response.key)
+						if showFavicon {
+							Favicon(domain: response.key)
+						}
 					}
 				}
 				.foregroundStyle(.foreground)
+			}
+		}
+		.toolbar {
+			ToolbarItemGroup(placement: .automatic) {
+				Picker("Favicon", selection: $showFavicon) {
+					Label("Show", systemImage: "checklist.unchecked").tag(true)
+					Label("Hide", systemImage: "list.bullet").tag(false)
+				}
+				.pickerStyle(.segmented)
 			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))

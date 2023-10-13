@@ -49,10 +49,9 @@ struct PasswordRules: View {
 	private let isCompact = false
 	#endif
 
-	@ScaledMetric(wrappedValue: 24, relativeTo: .body) private var faviconHeight
-	
 	@AppStorage("showFavicon") private var showFavicon = true
-	
+	@ScaledMetric(wrappedValue: 24, relativeTo: .body) private var faviconHeight
+
 	@State private var sortOrder = [KeyPathComparator(\Rule.id)]
 
 	var body: some View {
@@ -69,74 +68,9 @@ struct PasswordRules: View {
 
 		Group {
 			if isCompact {
-				List {
-					ForEach(responses) { rule in
-						NavigationLink {
-							PasswordRuleDetail(rule: rule)
-						} label: {
-							Label {
-								LabeledContent {} label: {
-									Text(rule.id)
-									PasswordRuleChips(rule: rule)
-								}
-							} icon: {
-								Favicon(domain: rule.id)
-							}
-						}
-					}
-				}
-				.listStyle(.plain)
+				RulesList(rules: responses, showFavicon: showFavicon)
 			} else {
-				Table(of: Rule.self, sortOrder: $sortOrder) {
-					TableColumn("Domain", value: \.id) { domain in
-						HStack {
-							if showFavicon {
-								Favicon(domain: domain.id)
-									.frame(maxHeight: faviconHeight)
-							}
-							Text(domain.id)
-						}
-					}
-
-					TableColumn("Length", value: \.sumLength) { domain in
-						if showFavicon {
-							PasswordRuleChips.Length(min: domain.minLength, max: domain.maxLength)
-								.symbolVariant(.fill)
-								.symbolRenderingMode(.hierarchical)
-								.font(.title)
-						} else {
-							Text("\(domain.minLength?.description ?? "?") – \(domain.maxLength?.description ?? "?")")
-						}
-					}
-					.width(min: 48, ideal: 48, max: 64)
-					
-					TableColumn("Required") { domain in
-						HStack {
-							ForEach(domain.required.sorted()) { set in
-								if let symbol = set.symbol {
-									Image(systemName: symbol)
-								} else {
-									Text(set.description)
-								}
-							}
-						}
-					}
-					TableColumn("Allowed") { domain in
-						HStack {
-							ForEach(domain.allowed.sorted()) { set in
-								if let symbol = set.symbol {
-									Image(systemName: symbol)
-								} else {
-									Text(set.description)
-								}
-							}
-						}
-					}
-				} rows: {
-					ForEach(responses) { rule in
-						TableRow(rule)
-					}
-				}
+				RulesTable(rules: responses, showFavicon: showFavicon, faviconHeight: faviconHeight, sortOrder: $sortOrder)
 			}
 		}
 		.toolbar {
@@ -192,6 +126,101 @@ struct RefreshButton: View {
 	}
 }
 
+struct RulesList: View {
+	let rules: [Rule]
+	let showFavicon: Bool
+
+	var body: some View {
+		List {
+			ForEach(rules) { rule in
+				NavigationLink {
+					PasswordRuleDetail(rule: rule)
+				} label: {
+					Label {
+						LabeledContent {} label: {
+							Text(rule.id)
+							PasswordRuleChips(rule: rule)
+						}
+					} icon: {
+						if showFavicon {
+							Favicon(domain: rule.id)
+						}
+					}
+				}
+			}
+		}
+		.listStyle(.plain)
+	}
+}
+
+struct RulesTable: View {
+	let rules: [Rule]
+	let showFavicon: Bool
+	let faviconHeight: Double
+	@Binding var sortOrder: [KeyPathComparator<Rule>]
+
+	@State private var selection: Rule.ID?
+
+	var body: some View {
+		Table(of: Rule.self, selection: $selection, sortOrder: $sortOrder) {
+			TableColumn("Domain", value: \.id) { domain in
+				HStack {
+					if showFavicon {
+						Favicon(domain: domain.id)
+							.frame(maxHeight: faviconHeight)
+					}
+					Text(domain.id)
+				}
+			}
+
+			TableColumn("Length", value: \.sumLength) { domain in
+				if showFavicon {
+					PasswordRuleChips.Length(min: domain.minLength, max: domain.maxLength)
+						.symbolVariant(.fill)
+						.symbolRenderingMode(.hierarchical)
+						.font(.title)
+				} else {
+					Text("\(domain.minLength?.description ?? "?") – \(domain.maxLength?.description ?? "?")")
+				}
+			}
+			.width(min: 48, ideal: 48, max: 64)
+
+			TableColumn("Required") { domain in
+				HStack {
+					ForEach(domain.required.sorted()) { set in
+						if let symbol = set.symbol {
+							Image(systemName: symbol)
+						} else {
+							Text(set.description)
+						}
+					}
+				}
+			}
+			TableColumn("Allowed") { domain in
+				HStack {
+					ForEach(domain.allowed.sorted()) { set in
+						if let symbol = set.symbol {
+							Image(systemName: symbol)
+						} else {
+							Text(set.description)
+						}
+					}
+				}
+			}
+		} rows: {
+			ForEach(rules) { rule in
+				TableRow(rule)
+			}
+		}
+		.navigationDestination(isPresented: Binding(get: { selection != nil }, set: { if !$0 { selection = nil } })) {
+			if let rule = rules.first(where: { $0.id == selection }) {
+				PasswordRuleDetail(rule: rule)
+					.navigationSplitViewColumnWidth(min: 320, ideal: 640)
+			}
+		}
+	}
+}
+
 #Preview("Local") {
 	NavigationStack {
 		PasswordRules(response: [.init(id: "example.com", originalRule: "maxlength: 5;")])
@@ -205,5 +234,17 @@ struct RefreshButton: View {
 }
 
 #Preview("Table", traits: .fixedLayout(width: 960, height: 640)) {
-	PasswordRules()
+	NavigationSplitView {
+		List {
+			NavigationLink {
+				PasswordRules()
+			} label: {
+				Text("PasswordRules")
+			}
+		}
+	} content: {
+		PasswordRules()
+	} detail: {
+		EmptyView()
+	}
 }

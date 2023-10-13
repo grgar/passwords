@@ -1,7 +1,7 @@
 import Foundation
 import RegexBuilder
 
-struct Rule: Identifiable {
+struct Rule: Identifiable, Hashable {
 	let id: String
 	let originalRule: String
 

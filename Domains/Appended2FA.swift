@@ -44,14 +44,7 @@ struct Appended2FA: View {
 					Text("Domains which use a two-factor authentication scheme where you must append a generated code to your password when signing in.")
 				}
 			}
-			.searchable(text: $searchText, prompt: Text("Search Domains"))
-			.refreshable {
-				await reload()
-			}
-			.task {
-				guard response.isEmpty else { return }
-				await reload(cache: .returnCacheDataElseLoad)
-			}
+			#if os(iOS)
 			.toolbar {
 				Button {
 					showHelp.toggle()
@@ -78,6 +71,7 @@ struct Appended2FA: View {
 					.presentationCompactAdaptation(horizontal: .sheet, vertical: .popover)
 				}
 			}
+			#endif
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
 		.refreshable {

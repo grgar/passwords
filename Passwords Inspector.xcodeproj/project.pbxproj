@@ -16,6 +16,7 @@
 		174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
 		174840992AD49A3E00EB9592 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 174840982AD49A3E00EB9592 /* Settings.bundle */; };
 		17618B7C2AC200C600B31C28 /* PasswordRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17618B7B2AC200C600B31C28 /* PasswordRules.swift */; };
+		1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1776885E2AD9D65400F68E88 /* HomeSidebar.swift */; };
 		17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */; };
 		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
@@ -35,6 +36,7 @@
 		174840982AD49A3E00EB9592 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1748409A2AD4A73C00EB9592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17618B7B2AC200C600B31C28 /* PasswordRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRules.swift; sourceTree = "<group>"; };
+		1776885E2AD9D65400F68E88 /* HomeSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSidebar.swift; sourceTree = "<group>"; };
 		17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleDetail.swift; sourceTree = "<group>"; };
 		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
@@ -57,7 +59,7 @@
 			children = (
 				1717C49D2ABA44EC00AD991A /* PIApp.swift */,
 				1717C49F2ABA44EC00AD991A /* ContentView.swift */,
-				174820E12AD33DD8006AF2AC /* HomeBackground.swift */,
+				177688602AD9D65A00F68E88 /* Home */,
 				17882AC22AC848380037E3A6 /* Rule */,
 				17882AC32AC8483E0037E3A6 /* Domains */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
@@ -75,6 +77,15 @@
 				1717C49A2ABA44EC00AD991A /* Passwords Inspector.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		177688602AD9D65A00F68E88 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1776885E2AD9D65400F68E88 /* HomeSidebar.swift */,
+				174820E12AD33DD8006AF2AC /* HomeBackground.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		17882AC22AC848380037E3A6 /* Rule */ = {
@@ -175,6 +186,7 @@
 				17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */,
 				17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */,
 				173245232AC4CE99005C3AC2 /* Rule.swift in Sources */,
+				1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */,
 				17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */,
 				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
 				173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */,

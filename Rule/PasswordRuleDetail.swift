@@ -37,6 +37,9 @@ struct PasswordRuleDetail: View {
 			} header: {
 				Text("Length")
 			}
+			#if os(macOS)
+			.listRowSeparator(.hidden)
+			#endif
 
 			Section {
 				Grid {
