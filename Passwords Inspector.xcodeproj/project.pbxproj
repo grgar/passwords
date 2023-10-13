@@ -20,6 +20,7 @@
 		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
+		17CD530E2AD959B900145273 /* LoadResourceViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CD530D2AD959B900145273 /* LoadResourceViewModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
 		17BFF7032ABF7D50004047AD /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
+		17CD530D2AD959B900145273 /* LoadResourceViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadResourceViewModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				17882AC22AC848380037E3A6 /* Rule */,
 				17882AC32AC8483E0037E3A6 /* Domains */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
+				17CD530D2AD959B900145273 /* LoadResourceViewModifier.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
 				1717C4A32ABA44ED00AD991A /* PI.entitlements */,
 				1748409A2AD4A73C00EB9592 /* Info.plist */,
@@ -179,6 +182,7 @@
 				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
 				173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */,
 				174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */,
+				17CD530E2AD959B900145273 /* LoadResourceViewModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
