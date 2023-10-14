@@ -67,11 +67,15 @@ struct PasswordRules: View {
 		})
 
 		Group {
+			#if os(tvOS)
+			RulesList(rules: responses, showFavicon: showFavicon)
+			#else
 			if isCompact {
 				RulesList(rules: responses, showFavicon: showFavicon)
 			} else {
 				RulesTable(rules: responses, showFavicon: showFavicon, faviconHeight: faviconHeight, sortOrder: $sortOrder)
 			}
+			#endif
 		}
 		.toolbar {
 			ToolbarItemGroup(placement: .automatic) {
@@ -153,6 +157,7 @@ struct RulesList: View {
 	}
 }
 
+@available(tvOS, unavailable)
 struct RulesTable: View {
 	let rules: [Rule]
 	let showFavicon: Bool

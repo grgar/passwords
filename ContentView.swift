@@ -23,9 +23,19 @@ struct ContentView: View {
 	@State private var navigationCategory: NavigationCategory?
 
 	var body: some View {
+		#if os(tvOS)
+		NavigationStack {
+			PasswordRules()
+				.background {
+					HomeBackground()
+				}
+		}
+		#else
 		NavigationSplitView(columnVisibility: $visibility) {
 			HomeSidebar(selection: $navigationCategory)
+			#if !os(tvOS)
 				.listStyle(.sidebar)
+			#endif
 		} content: {
 			if let navigationCategory {
 				navigationCategory
@@ -40,6 +50,7 @@ struct ContentView: View {
 		}
 		#if os(macOS)
 		.frame(minWidth: 320 + 320 + (navigationCategory == .rules ? 320 : 0))
+		#endif
 		#endif
 	}
 }

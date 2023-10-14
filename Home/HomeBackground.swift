@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeBackground: View {
-	let scale: Int = {
+	static let scale: Int = {
 		#if os(macOS)
 		return 48
 		#else
@@ -9,17 +9,17 @@ struct HomeBackground: View {
 		#endif
 	}()
 	
-	let padding: Int = {
-		#if os(macOS)
-		return 12
+	static let padding: CGSize = {
+		#if os(tvOS)
+		return .init(width: 96, height: 96)
 		#else
-		return 12
+		return .init(width: 12, height: 24)
 		#endif
 	}()
 	
 	var body: some View {
 		GeometryReader { geometry in
-			Image(systemName: "key.fill", size: .init(width: scale, height: scale), padding: .init(width: padding, height: padding * 2))
+			Image(systemName: "key.fill", size: .init(width: Self.scale, height: Self.scale), padding: Self.padding)
 				.resizable(resizingMode: .tile)
 				.modifier(InvertIfDark())
 				.opacity(0.05)

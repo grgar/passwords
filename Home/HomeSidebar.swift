@@ -16,9 +16,16 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Password Rules")
+					#if os(tvOS)
+						.padding(.horizontal, 96)
+					#endif
 					#endif
 				} icon: {
 					Image(systemName: "lock.rectangle")
+					#if os(tvOS)
+						.font(.largeTitle)
+						.padding(.leading, 64)
+					#endif
 				}
 				#if os(iOS)
 				.padding(.vertical)
@@ -36,9 +43,16 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Shared Credentials")
+					#if os(tvOS)
+						.padding(.horizontal, 96)
+					#endif
 					#endif
 				} icon: {
 					Image(systemName: "rectangle.on.rectangle.angled")
+					#if os(tvOS)
+						.font(.largeTitle)
+						.padding(.leading, 64)
+					#endif
 				}
 				#if os(iOS)
 				.padding(.vertical)
@@ -56,9 +70,16 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Change Password URLs")
+					#if os(tvOS)
+						.padding(.horizontal, 96)
+					#endif
 					#endif
 				} icon: {
 					Image(systemName: "rectangle.and.pencil.and.ellipsis")
+					#if os(tvOS)
+						.font(.largeTitle)
+						.padding(.leading, 64)
+					#endif
 				}
 				#if os(iOS)
 				.padding(.vertical)
@@ -76,20 +97,29 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Appended 2FA")
+					#if os(tvOS)
+						.padding(.horizontal, 96)
+					#endif
 					#endif
 				} icon: {
 					Image(systemName: "123.rectangle")
+					#if os(tvOS)
+						.font(.largeTitle)
+						.padding(.leading, 64)
+					#endif
 				}
 				#if os(iOS)
 				.padding(.vertical)
 				#endif
 			}
 		}
+		#if !os(tvOS)
 		.scrollContentBackground(.hidden)
+		.listStyle(.sidebar)
+		#endif
 		.background {
 			HomeBackground()
 		}
-		.listStyle(.sidebar)
 		.navigationTitle(Text("Passwords Inspector"))
 		#if os(iOS)
 			.navigationBarTitleDisplayMode(.inline)
