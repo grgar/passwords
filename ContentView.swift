@@ -34,9 +34,13 @@ struct ContentView: View {
 		} detail: {
 			Text("")
 				.accessibilityHidden(true)
-				.navigationSplitViewColumnWidth(ideal: navigationCategory == .rules ? 320 : 0,
-																				max: navigationCategory == .rules ? 480 : 0)
+				.navigationSplitViewColumnWidth(min: navigationCategory == .rules ? 320 : 0,
+				                                ideal: navigationCategory == .rules ? 320 : 0,
+				                                max: navigationCategory == .rules ? 480 : 0)
 		}
+		#if os(macOS)
+		.frame(minWidth: 320 + 320 + (navigationCategory == .rules ? 320 : 0))
+		#endif
 	}
 }
 

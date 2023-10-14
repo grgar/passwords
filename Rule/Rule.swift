@@ -9,8 +9,8 @@ struct Rule: Identifiable, Hashable {
 	var maxLength: Int?
 	var required = Set<PasswordCharacter>()
 	var allowed = Set<PasswordCharacter>()
-	
-	var sumLength: Int { (minLength ?? 0) + (maxLength ?? 0) }
+
+	var sumLength: Int { (self.minLength ?? 0) + (self.maxLength ?? 0) }
 
 	enum PasswordCharacter: LosslessStringConvertible, Hashable, CaseIterable, Comparable, Identifiable {
 		case lower, upper, digit, special, unicode, other(Set<Character>)
@@ -28,7 +28,7 @@ struct Rule: Identifiable, Hashable {
 			case "unicode":
 				self = .unicode
 			default:
-				self = .other(description.reduce(into: Set<Character>()) { partialResult, character in
+				self = .other(description.dropFirst().dropLast().reduce(into: Set<Character>()) { partialResult, character in
 					partialResult.insert(character)
 				})
 			}
@@ -96,13 +96,13 @@ extension Rule {
 			case "maxlength":
 				self.maxLength = Int(split[1].trimmingCharacters(in: .punctuationCharacters))
 			case "required":
-				for set in String(split[1]).split(separator: try! Regex(",(?: |$)")) {
+				for set in String(split[1]).split(separator: /, ?(?![^\[]*\])/) {
 					if let set = PasswordCharacter(String(set)) {
 						self.required.insert(set)
 					}
 				}
 			case "allowed":
-				for set in String(split[1]).split(separator: try! Regex(",(?: |$)")) {
+				for set in String(split[1]).split(separator: /, ?(?![^\[]*\])/) {
 					if let set = PasswordCharacter(String(set)) {
 						self.allowed.insert(set)
 					}
