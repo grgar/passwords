@@ -43,6 +43,7 @@ struct PasswordRuleDetail: View {
 
 			Section {
 				Grid {
+					#if !os(watchOS)
 					GridRow {
 						Text("")
 							.accessibilityHidden(true)
@@ -55,22 +56,61 @@ struct PasswordRuleDetail: View {
 						Text("Allowed")
 					}
 					.font(.caption)
+					#else
+					GridRow {
+						#if !os(watchOS)
+						Text("")
+							.gridCellUnsizedAxes([.horizontal, .vertical])
+							.gridColumnAlignment(.trailing)
+						#endif
+						Color.clear
+							.gridCellUnsizedAxes(.vertical)
+							.gridColumnAlignment(.leading)
+						Text("")
+							.gridCellUnsizedAxes([.horizontal, .vertical])
+						Text("")
+							.gridCellUnsizedAxes([.horizontal, .vertical])
+					}
+					.font(.caption)
+					.frame(height: 0)
+					.accessibilityHidden(true)
+					#endif
 
 					ForEach(rule.required.sorted()) { required in
 						GridRow {
 							if let symbol = required.symbol {
+								#if os(watchOS)
+								switch required {
+								case let .other(set):
+									Text("\(Image(systemName: symbol)) \(set.sorted().map(String.init).joined())")
+								default:
+									Text("\(Image(systemName: symbol)) \(required.description)")
+								}
+								#else
 								Image(systemName: symbol)
+								#endif
 							} else {
+								#if os(watchOS)
+								switch required {
+								case let .other(set):
+									Text(set.sorted().map(String.init).joined())
+								default:
+									Text(required.description)
+								}
+								#else
 								Text("")
 									.accessibilityHidden(true)
 									.gridCellUnsizedAxes([.horizontal, .vertical])
+								#endif
 							}
+							#if !os(watchOS)
 							switch required {
 							case let .other(set):
 								Text(set.sorted().map(String.init).joined())
 							default:
 								Text(required.description)
 							}
+							#endif
 							Image(systemName: "checkmark.circle.fill")
 								.symbolRenderingMode(.palette)
 								.foregroundStyle(.foreground, .quaternary)
@@ -84,18 +124,38 @@ struct PasswordRuleDetail: View {
 					ForEach((rule.allowed.subtracting(rule.required)).sorted()) { required in
 						GridRow {
 							if let symbol = required.symbol {
+								#if os(watchOS)
+								switch required {
+								case let .other(set):
+									Text("\(Image(systemName: symbol)) \(set.sorted().map(String.init).joined())")
+								default:
+									Text("\(Image(systemName: symbol)) \(required.description)")
+								}
+								#else
 								Image(systemName: symbol)
+								#endif
 							} else {
+								#if os(watchOS)
+								switch required {
+								case let .other(set):
+									Text(set.sorted().map(String.init).joined())
+								default:
+									Text(required.description)
+								}
+								#else
 								Text("")
 									.accessibilityHidden(true)
 									.gridCellUnsizedAxes([.horizontal, .vertical])
+								#endif
 							}
+							#if !os(watchOS)
 							switch required {
 							case let .other(set):
 								Text(set.sorted().map(String.init).joined())
 							default:
 								Text(required.description)
 							}
+							#endif
 							Text("")
 								.accessibilityHidden(true)
 							Image(systemName: "checkmark.circle.fill")
@@ -107,12 +167,24 @@ struct PasswordRuleDetail: View {
 				}
 				.padding(.vertical, 8)
 			} header: {
+				#if os(watchOS)
+				VStack(alignment: .leading) {
+					Text("Characters")
+					HStack {
+						Spacer()
+						Text("Required")
+						Text("Allowed")
+					}
+					.font(.caption2)
+				}
+				#else
 				Text("Characters")
+				#endif
 			}
 		}
 		.navigationTitle(rule.id)
 		#if os(iOS)
-		.navigationBarTitleDisplayMode(.large)
+			.navigationBarTitleDisplayMode(.large)
 		#endif
 	}
 }

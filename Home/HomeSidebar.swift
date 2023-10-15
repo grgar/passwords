@@ -113,7 +113,7 @@ struct HomeSidebar: View {
 				#endif
 			}
 		}
-		#if !os(tvOS)
+		#if os(iOS) || os(macOS)
 		.scrollContentBackground(.hidden)
 		.listStyle(.sidebar)
 		#endif

@@ -67,7 +67,7 @@ struct PasswordRules: View {
 		})
 
 		Group {
-			#if os(tvOS)
+			#if os(tvOS) || os(watchOS)
 			RulesList(rules: responses, showFavicon: showFavicon)
 			#else
 			if isCompact {
@@ -79,11 +79,15 @@ struct PasswordRules: View {
 		}
 		.toolbar {
 			ToolbarItemGroup(placement: .automatic) {
+				#if os(watchOS)
+				Toggle("Favicon", isOn: $showFavicon)
+				#else
 				Picker("Favicon", selection: $showFavicon) {
 					Label("Show", systemImage: "checklist.unchecked").tag(true)
 					Label("Hide", systemImage: "list.bullet").tag(false)
 				}
 				.pickerStyle(.segmented)
+				#endif
 			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
@@ -108,121 +112,8 @@ struct PasswordRules: View {
 		}
 		.navigationTitle(Text("Password Rules"))
 		#if os(iOS)
-		.navigationBarTitleDisplayMode(.large)
+			.navigationBarTitleDisplayMode(.large)
 		#endif
-	}
-}
-
-struct RefreshButton: View {
-	@Binding var isError: Bool
-
-	@Environment(\.refresh) private var refresh
-
-	var body: some View {
-		Button {
-			isError = false
-			Task {
-				await refresh?()
-			}
-		} label: {
-			Text("Retry")
-		}
-	}
-}
-
-struct RulesList: View {
-	let rules: [Rule]
-	let showFavicon: Bool
-
-	var body: some View {
-		List {
-			ForEach(rules) { rule in
-				NavigationLink {
-					PasswordRuleDetail(rule: rule)
-				} label: {
-					Label {
-						LabeledContent {} label: {
-							Text(rule.id)
-							PasswordRuleChips(rule: rule)
-						}
-					} icon: {
-						if showFavicon {
-							Favicon(domain: rule.id)
-						}
-					}
-				}
-			}
-		}
-		.listStyle(.plain)
-	}
-}
-
-@available(tvOS, unavailable)
-struct RulesTable: View {
-	let rules: [Rule]
-	let showFavicon: Bool
-	let faviconHeight: Double
-	@Binding var sortOrder: [KeyPathComparator<Rule>]
-
-	@State private var selection: Rule.ID?
-
-	var body: some View {
-		Table(of: Rule.self, selection: $selection, sortOrder: $sortOrder) {
-			TableColumn("Domain", value: \.id) { domain in
-				HStack {
-					if showFavicon {
-						Favicon(domain: domain.id)
-							.frame(maxHeight: faviconHeight)
-					}
-					Text(domain.id)
-				}
-			}
-
-			TableColumn("Length", value: \.sumLength) { domain in
-				if showFavicon {
-					PasswordRuleChips.Length(min: domain.minLength, max: domain.maxLength)
-						.symbolVariant(.fill)
-						.symbolRenderingMode(.hierarchical)
-						.font(.title)
-				} else {
-					Text("\(domain.minLength?.description ?? "?") – \(domain.maxLength?.description ?? "?")")
-				}
-			}
-			.width(min: 48, ideal: 48, max: 64)
-
-			TableColumn("Required") { domain in
-				HStack {
-					ForEach(domain.required.sorted()) { set in
-						if let symbol = set.symbol {
-							Image(systemName: symbol)
-						} else {
-							Text(set.description)
-						}
-					}
-				}
-			}
-			TableColumn("Allowed") { domain in
-				HStack {
-					ForEach(domain.allowed.sorted()) { set in
-						if let symbol = set.symbol {
-							Image(systemName: symbol)
-						} else {
-							Text(set.description)
-						}
-					}
-				}
-			}
-		} rows: {
-			ForEach(rules) { rule in
-				TableRow(rule)
-			}
-		}
-		.navigationDestination(isPresented: Binding(get: { selection != nil }, set: { if !$0 { selection = nil } })) {
-			if let rule = rules.first(where: { $0.id == selection }) {
-				PasswordRuleDetail(rule: rule)
-					.navigationSplitViewColumnWidth(min: 320, ideal: 640)
-			}
-		}
 	}
 }
 

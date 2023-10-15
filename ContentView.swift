@@ -33,7 +33,7 @@ struct ContentView: View {
 		#else
 		NavigationSplitView(columnVisibility: $visibility) {
 			HomeSidebar(selection: $navigationCategory)
-			#if !os(tvOS)
+			#if os(iOS) || os(macOS)
 				.listStyle(.sidebar)
 			#endif
 		} content: {

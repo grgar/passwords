@@ -48,6 +48,21 @@ struct ChangePasswordURLs: View {
 				}
 			}
 			ForEach(responses, id: \.key) { response in
+				#if os(tvOS) || os(watchOS)
+				Label {
+					LabeledContent {
+						EmptyView()
+					} label: {
+						Text(response.key)
+						Text(response.value.relativePath)
+							.foregroundStyle(.secondary)
+					}
+				} icon: {
+					if showFavicon {
+						Favicon(domain: response.key)
+					}
+				}
+				#else
 				Link(destination: response.value) {
 					Label {
 						LabeledContent {
@@ -67,15 +82,20 @@ struct ChangePasswordURLs: View {
 					}
 				}
 				.foregroundStyle(.foreground)
+				#endif
 			}
 		}
 		.toolbar {
 			ToolbarItemGroup(placement: .automatic) {
+				#if os(watchOS)
+				Toggle("Favicon", isOn: $showFavicon)
+				#else
 				Picker("Favicon", selection: $showFavicon) {
 					Label("Show", systemImage: "checklist.unchecked").tag(true)
 					Label("Hide", systemImage: "list.bullet").tag(false)
 				}
 				.pickerStyle(.segmented)
+				#endif
 			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
@@ -96,7 +116,7 @@ struct ChangePasswordURLs: View {
 		}
 		.navigationTitle(Text("Change Password"))
 		#if os(iOS)
-		.navigationBarTitleDisplayMode(.large)
+			.navigationBarTitleDisplayMode(.large)
 		#endif
 	}
 }
