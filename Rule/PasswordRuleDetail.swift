@@ -10,8 +10,13 @@ struct PasswordRuleDetail: View {
 					HStack(alignment: .firstTextBaseline) {
 						if let min = rule.minLength {
 							VStack {
-								Image(systemName: "\(min).square.fill")
-									.font(.largeTitle)
+								if min <= 50 {
+									Image(systemName: "\(min).square.fill")
+										.font(.largeTitle)
+								} else {
+									Text(min.description)
+										.font(.title2)
+								}
 								Text("min")
 							}
 						}
@@ -20,10 +25,15 @@ struct PasswordRuleDetail: View {
 								.font(.largeTitle)
 								.foregroundStyle(.secondary)
 						}
-						if let min = rule.maxLength {
+						if let max = rule.maxLength {
 							VStack {
-								Image(systemName: "\(min).square.fill")
-									.font(.largeTitle)
+								if max <= 50 {
+									Image(systemName: "\(max).square.fill")
+										.font(.largeTitle)
+								} else {
+									Text(max.description)
+										.font(.title2)
+								}
 								Text("max")
 							}
 						}
@@ -192,9 +202,9 @@ struct PasswordRuleDetail: View {
 #Preview("Demo") {
 	PasswordRuleDetail(rule: .init(
 		id: "example.com", originalRule: "one: two; three: four; five: six;",
-		minLength: 8, maxLength: 16,
+		minLength: 8, maxLength: 60,
 		required: .init(arrayLiteral: .lower, .upper, .digit),
-		allowed: .init(arrayLiteral: .lower, .upper, .digit, .special, .unicode, .other(.init(arrayLiteral: "a", "b")))
+		allowed: .init(arrayLiteral: .lower, .upper, .digit, .special, .unicode, .other(.init("[- !\"#$&'()*+,.:;<=>?@[^_`{|}~]]")))
 	))
 }
 
