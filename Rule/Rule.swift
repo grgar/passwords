@@ -87,8 +87,9 @@ struct Rule: Identifiable, Hashable {
 extension Rule {
 	init(domain: String, rule originalRule: String) {
 		self = Self(id: domain, originalRule: originalRule)
-		for split in originalRule.split(separator: /;(?: |$)/, omittingEmptySubsequences: true) {
-			let split = String(split).split(separator: /: ?/, maxSplits: 1)
+		// TODO: Fix regex if character set contains one bracket without the other
+		for split in originalRule.split(separator: /; ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/, omittingEmptySubsequences: true) {
+			let split = String(split).split(separator: /: ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/, maxSplits: 1)
 			if split.count != 2 { continue }
 			switch split[0] {
 			case "minlength":
@@ -96,13 +97,13 @@ extension Rule {
 			case "maxlength":
 				self.maxLength = Int(split[1].trimmingCharacters(in: .punctuationCharacters))
 			case "required":
-				for set in String(split[1]).split(separator: /, ?(?![^\[]*\])/) {
+				for set in String(split[1]).split(separator: /, ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/) {
 					if let set = PasswordCharacter(String(set)) {
 						self.required.insert(set)
 					}
 				}
 			case "allowed":
-				for set in String(split[1]).split(separator: /, ?(?![^\[]*\])/) {
+				for set in String(split[1]).split(separator: /, ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/) {
 					if let set = PasswordCharacter(String(set)) {
 						self.allowed.insert(set)
 					}
