@@ -34,44 +34,24 @@ struct Appended2FA: View {
 		let responses = response
 			.filter { searchText == "" || $0.localizedCaseInsensitiveContains(searchText) }
 
-		GeometryReader { geometry in
-			List {
-				Section {
-					ForEach(responses, id: \.hashValue) { response in
-						Text(response)
-					}
-				} header: {} footer: {
-					Text("Domains which use a two-factor authentication scheme where you must append a generated code to your password when signing in.")
-				}
+		List {
+			Section {
+				Text("prevent auto-submission of signin forms, allowing you to append the 2FA code without frustration")
+				Text("suppress prompting to update a saved password when the submitted password is prefixed by the already-stored password")
+			} header: {
+				Text("This list of websites is used to")
+					.textCase(nil)
+					.font(.caption)
 			}
-			#if os(iOS)
-			.toolbar {
-				Button {
-					showHelp.toggle()
-				} label: {
-					Label("Help", systemImage: "questionmark.circle")
-						.symbolVariant(showHelp ? .fill : .none)
+			.font(.caption)
+
+			Section {
+				ForEach(responses, id: \.hashValue) { response in
+					Text(response)
 				}
-				.popover(isPresented: $showHelp, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
-					List {
-						Section {
-							Text("prevent auto-submission of signin forms, allowing you to append the 2FA code without frustration")
-							Text("suppress prompting to update a saved password when the submitted password is prefixed by the already-stored password")
-						} header: {
-							Text("This list of websites is used to")
-								.textCase(nil)
-								.font(.body)
-						}
-					}
-					.listStyle(.inset)
-					.frame(minWidth: geometry.size.width / 2, minHeight: geometry.size.width < geometry.size.height ? 0 : geometry.size.height / 3 * 2)
-					.presentationDragIndicator(.visible)
-					.presentationDetents([.fraction(0.3), .medium])
-					.presentationBackgroundInteraction(.enabled)
-					.presentationCompactAdaptation(horizontal: .sheet, vertical: .popover)
-				}
+			} header: {} footer: {
+				Text("Domains which use a two-factor authentication scheme where you must append a generated code to your password when signing in.")
 			}
-			#endif
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
 		.refreshable {
@@ -83,7 +63,7 @@ struct Appended2FA: View {
 		}
 		.navigationTitle(Text("Appended 2FA"))
 		#if os(iOS)
-		.navigationBarTitleDisplayMode(.large)
+			.navigationBarTitleDisplayMode(.large)
 		#endif
 	}
 }
