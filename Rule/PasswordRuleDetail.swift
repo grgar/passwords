@@ -190,6 +190,10 @@ struct PasswordRuleDetail: View {
 				#else
 				Text("Characters")
 				#endif
+			} footer: {
+				if rule.required.isEmpty && rule.allowed.isEmpty {
+					Text("No restriction information available")
+				}
 			}
 		}
 		.navigationTitle(rule.id)
