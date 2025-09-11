@@ -79,15 +79,7 @@ struct PasswordRules: View {
 		}
 		.toolbar {
 			ToolbarItemGroup(placement: .automatic) {
-				#if os(watchOS)
-				Toggle("Favicon", isOn: $showFavicon)
-				#else
-				Picker("Favicon", selection: $showFavicon) {
-					Label("Show", systemImage: "checklist.unchecked").tag(true)
-					Label("Hide", systemImage: "list.bullet").tag(false)
-				}
-				.pickerStyle(.segmented)
-				#endif
+				Toggle("Favicon", systemImage: "checklist.unchecked", isOn: $showFavicon)
 			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
