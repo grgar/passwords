@@ -21,6 +21,8 @@
 		1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1776885E2AD9D65400F68E88 /* HomeSidebar.swift */; };
 		17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */; };
 		17A3A7662ADC8A3E00CF82FD /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A3A7652ADC8A3E00CF82FD /* Tests.swift */; };
+		17A5E5FE2E7378960040F28F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 17A5E5FD2E7378960040F28F /* AppIcon.icon */; };
+		17A5E5FF2E7378960040F28F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 17A5E5FD2E7378960040F28F /* AppIcon.icon */; };
 		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
@@ -92,6 +94,7 @@
 		17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleDetail.swift; sourceTree = "<group>"; };
 		17A3A7632ADC8A3E00CF82FD /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17A3A7652ADC8A3E00CF82FD /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		17A5E5FD2E7378960040F28F /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
 		17BFF7032ABF7D50004047AD /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
@@ -135,6 +138,7 @@
 				17882AC32AC8483E0037E3A6 /* Domains */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
+				17A5E5FD2E7378960040F28F /* AppIcon.icon */,
 				1717C4A32ABA44ED00AD991A /* PI.entitlements */,
 				1748409A2AD4A73C00EB9592 /* Info.plist */,
 				174840982AD49A3E00EB9592 /* Settings.bundle */,
@@ -298,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17A5E5FF2E7378960040F28F /* AppIcon.icon in Resources */,
 				17145A002ADB405E00E6C111 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,6 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17A5E5FE2E7378960040F28F /* AppIcon.icon in Resources */,
 				174840992AD49A3E00EB9592 /* Settings.bundle in Resources */,
 				1717C4A22ABA44ED00AD991A /* Assets.xcassets in Resources */,
 			);
@@ -572,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 5TFUK958NL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -594,7 +600,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.georgegarside.passwordsinspector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -616,7 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PI.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 5TFUK958NL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -638,7 +644,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.georgegarside.passwordsinspector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
