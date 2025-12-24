@@ -97,6 +97,9 @@ struct ChangePasswordURLs: View {
 				.pickerStyle(.segmented)
 				#endif
 			}
+			#if os(iOS)
+			.sharedBackgroundVisibility(.hidden)
+			#endif
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
 		.searchSuggestions {
