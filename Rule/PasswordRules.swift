@@ -147,3 +147,9 @@ struct PasswordRules: View {
 		EmptyView()
 	}
 }
+
+#Preview("Error") {
+	NavigationStack {
+		PasswordRules(error: DecodingError.typeMismatch(String.self, .init(codingPath: [], debugDescription: "")))
+	}
+}
