@@ -1,22 +1,5 @@
 import SwiftUI
 
-enum NavigationCategory: View {
-	case rules, shared, change, appended
-
-	var body: some View {
-		switch self {
-		case .rules:
-			PasswordRules()
-		case .shared:
-			SharedCredentials()
-		case .change:
-			ChangePasswordURLs()
-		case .appended:
-			Appended2FA()
-		}
-	}
-}
-
 struct ContentView: View {
 	@State private var visibility: NavigationSplitViewVisibility = .all
 
@@ -46,12 +29,6 @@ struct ContentView: View {
 	}
 }
 
-#if os(macOS)
-#Preview(traits: .fixedLayout(width: 960, height: 640)) {
-	ContentView()
-}
-#else
 #Preview {
 	ContentView()
 }
-#endif

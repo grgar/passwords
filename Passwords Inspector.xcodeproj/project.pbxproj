@@ -26,6 +26,7 @@
 		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
+		17C2FD012EFCA18700CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
 		17CFADC92ADC4C2400BDEFBD /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
 		17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245222AC4CE99005C3AC2 /* Rule.swift */; };
 		17CFADCB2ADC4C2400BDEFBD /* PasswordRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17618B7B2AC200C600B31C28 /* PasswordRules.swift */; };
@@ -97,6 +98,7 @@
 		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
 		17BFF7032ABF7D50004047AD /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
+		17C2FD002EFCA18700CF385C /* NavigationCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCategory.swift; sourceTree = "<group>"; };
 		17CFADD52ADC754600BDEFBD /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		17CFADD82ADC756800BDEFBD /* RulesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesList.swift; sourceTree = "<group>"; };
 		17CFADDB2ADC758000BDEFBD /* RulesTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesTable.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				1776885E2AD9D65400F68E88 /* HomeSidebar.swift */,
 				174820E12AD33DD8006AF2AC /* HomeBackground.swift */,
+				17C2FD002EFCA18700CF385C /* NavigationCategory.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */,
 				17CFADD02ADC4C2400BDEFBD /* Favicon.swift in Sources */,
 				17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */,
+				17C2FD022EFCA18700CF385C /* NavigationCategory.swift in Sources */,
 				17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17618B7C2AC200C600B31C28 /* PasswordRules.swift in Sources */,
+				17C2FD012EFCA18700CF385C /* NavigationCategory.swift in Sources */,
 				1717C4A02ABA44EC00AD991A /* ContentView.swift in Sources */,
 				1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */,
 				17CFADDC2ADC758000BDEFBD /* RulesTable.swift in Sources */,
