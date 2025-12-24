@@ -9,15 +9,11 @@ struct Favicon: View {
 				image
 					.resizable()
 			} else if phase.error != nil {
-				Image(systemName: "ellipsis.circle")
+				Image(systemName: "questionmark.circle.dashed")
 					.resizable()
-					.opacity(0)
-					.accessibilityHidden(true)
+					.foregroundStyle(.secondary)
 			} else {
-				Image(systemName: "ellipsis.circle")
-					.resizable()
-					.redacted(reason: .placeholder)
-					.accessibilityHidden(true)
+				ProgressView()
 			}
 		}
 		.scaledToFit()
@@ -27,4 +23,5 @@ struct Favicon: View {
 
 #Preview {
 	Favicon(domain: "apple.com")
+	Favicon(domain: "127.0.0.1")
 }
