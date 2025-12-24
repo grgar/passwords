@@ -9,17 +9,13 @@ struct HomeBackground: View {
 		#endif
 	}()
 	
-	static let padding: CGSize = {
-		#if os(tvOS)
-		return .init(width: 96, height: 96)
-		#else
-		return .init(width: 12, height: 24)
-		#endif
-	}()
-	
 	var body: some View {
 		GeometryReader { geometry in
-			Image(systemName: "key.fill", size: .init(width: Self.scale, height: Self.scale), padding: Self.padding)
+			Image(
+				systemName: "key.fill",
+				size: .init(width: Self.scale, height: Self.scale),
+				padding: .init(width: 12, height: 24)
+			)
 				.resizable(resizingMode: .tile)
 				.modifier(InvertIfDark())
 				.opacity(0.05)

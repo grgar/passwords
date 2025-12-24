@@ -16,20 +16,10 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Password Rules")
-					#if os(tvOS)
-						.padding(.horizontal, 96)
-					#endif
 					#endif
 				} icon: {
 					Image(systemName: "lock.rectangle")
-					#if os(tvOS)
-						.font(.largeTitle)
-						.padding(.leading, 64)
-					#endif
 				}
-				#if os(iOS)
-				.padding(.vertical)
-				#endif
 			}
 
 			NavigationLink(value: NavigationCategory.shared) {
@@ -43,20 +33,10 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Shared Credentials")
-					#if os(tvOS)
-						.padding(.horizontal, 96)
-					#endif
 					#endif
 				} icon: {
 					Image(systemName: "rectangle.on.rectangle.angled")
-					#if os(tvOS)
-						.font(.largeTitle)
-						.padding(.leading, 64)
-					#endif
 				}
-				#if os(iOS)
-				.padding(.vertical)
-				#endif
 			}
 
 			NavigationLink(value: NavigationCategory.change) {
@@ -70,20 +50,10 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Change Password URLs")
-					#if os(tvOS)
-						.padding(.horizontal, 96)
-					#endif
 					#endif
 				} icon: {
 					Image(systemName: "rectangle.and.pencil.and.ellipsis")
-					#if os(tvOS)
-						.font(.largeTitle)
-						.padding(.leading, 64)
-					#endif
 				}
-				#if os(iOS)
-				.padding(.vertical)
-				#endif
 			}
 
 			NavigationLink(value: NavigationCategory.appended) {
@@ -97,20 +67,10 @@ struct HomeSidebar: View {
 					}
 					#else
 					Text("Appended 2FA")
-					#if os(tvOS)
-						.padding(.horizontal, 96)
-					#endif
 					#endif
 				} icon: {
 					Image(systemName: "123.rectangle")
-					#if os(tvOS)
-						.font(.largeTitle)
-						.padding(.leading, 64)
-					#endif
 				}
-				#if os(iOS)
-				.padding(.vertical)
-				#endif
 			}
 		}
 		#if os(iOS) || os(macOS)
@@ -144,5 +104,7 @@ struct HomeSidebar: View {
 }
 
 #Preview {
-	HomeSidebar(selection: .constant(nil))
+	NavigationStack {
+		HomeSidebar(selection: .constant(nil))
+	}
 }

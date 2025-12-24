@@ -48,7 +48,7 @@ struct ChangePasswordURLs: View {
 				}
 			}
 			ForEach(responses, id: \.key) { response in
-				#if os(tvOS) || os(watchOS)
+				#if os(watchOS)
 				Label {
 					LabeledContent {
 						EmptyView()

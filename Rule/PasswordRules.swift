@@ -67,7 +67,7 @@ struct PasswordRules: View {
 		})
 
 		Group {
-			#if os(tvOS) || os(watchOS)
+			#if os(watchOS)
 			RulesList(rules: responses, showFavicon: showFavicon)
 			#else
 			if isCompact {

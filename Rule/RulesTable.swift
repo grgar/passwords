@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(tvOS, unavailable)
 @available(watchOS, unavailable)
 struct RulesTable: View {
 	let rules: [Rule]
@@ -70,8 +69,6 @@ struct RulesTable: View {
 	}
 }
 
-#if !os(tvOS)
 #Preview {
 	RulesTable(rules: [], showFavicon: true, faviconHeight: 16, sortOrder: .constant([]))
 }
-#endif
