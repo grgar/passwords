@@ -27,6 +27,7 @@
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
 		17C2FD012EFCA18700CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
+		17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
 		17CFADC92ADC4C2400BDEFBD /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
 		17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245222AC4CE99005C3AC2 /* Rule.swift */; };
 		17CFADCB2ADC4C2400BDEFBD /* PasswordRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17618B7B2AC200C600B31C28 /* PasswordRules.swift */; };
@@ -345,7 +346,7 @@
 				17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */,
 				17CFADD02ADC4C2400BDEFBD /* Favicon.swift in Sources */,
 				17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */,
-				17C2FD022EFCA18700CF385C /* NavigationCategory.swift in Sources */,
+				17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */,
 				17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
