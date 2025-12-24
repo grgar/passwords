@@ -13,7 +13,17 @@ struct Favicon: View {
 					.resizable()
 					.foregroundStyle(.secondary)
 			} else {
+				#if os(macOS)
+				Image(systemName: "questionmark.circle.dashed")
+					.resizable()
+					.foregroundStyle(.clear)
+					.overlay {
+						ProgressView()
+							.controlSize(.small)
+					}
+				#else
 				ProgressView()
+				#endif
 			}
 		}
 		.scaledToFit()
