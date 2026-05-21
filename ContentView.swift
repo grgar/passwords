@@ -3,11 +3,22 @@ import SwiftUI
 struct ContentView: View {
 	@State private var visibility: NavigationSplitViewVisibility = .all
 
-	@State private var navigationCategory: NavigationCategory?
+	@SceneStorage("navigationCategory") private var navigationCategoryRaw: String?
+
+	private var navigationCategory: NavigationCategory? {
+		navigationCategoryRaw.flatMap(NavigationCategory.init)
+	}
+
+	private var navigationCategoryBinding: Binding<NavigationCategory?> {
+		Binding(
+			get: { navigationCategoryRaw.flatMap(NavigationCategory.init) },
+			set: { navigationCategoryRaw = $0?.rawValue }
+		)
+	}
 
 	var body: some View {
 		NavigationSplitView(columnVisibility: $visibility) {
-			HomeSidebar(selection: $navigationCategory)
+			HomeSidebar(selection: navigationCategoryBinding)
 			#if os(iOS) || os(macOS)
 				.listStyle(.sidebar)
 			#endif
