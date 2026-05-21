@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum NavigationCategory: View, CaseIterable {
+enum NavigationCategory: String, View, CaseIterable {
 	case rules, shared, change, appended
 
 	var body: some View {
