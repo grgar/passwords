@@ -14,6 +14,19 @@ struct PasswordRules: View {
 
 	@State var searchText = ""
 
+	private static let placeholderRules: [Rule] = [
+		Rule(domain: "example.com", rule: "minlength: 8; maxlength: 64; required: lower, upper, digit;"),
+		Rule(domain: "accounts.longdomain.com", rule: "minlength: 12; required: upper, digit;"),
+		Rule(domain: "login.co", rule: "maxlength: 20; required: lower;"),
+		Rule(domain: "secure.site.org", rule: "minlength: 6; maxlength: 32;"),
+		Rule(domain: "portal.example.net", rule: "required: lower, upper, digit, special;"),
+		Rule(domain: "auth.company.io", rule: "minlength: 10; maxlength: 128;"),
+		Rule(domain: "id.service.com", rule: "minlength: 8; required: digit;"),
+		Rule(domain: "myaccount.example.org", rule: "minlength: 8; maxlength: 64; required: lower, upper;"),
+		Rule(domain: "signin.platform.co", rule: "required: lower, upper, digit;"),
+		Rule(domain: "user.domain.net", rule: "minlength: 6; maxlength: 50;"),
+	]
+
 	@State var showHelp = false
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/password-rules.json")!
@@ -66,17 +79,22 @@ struct PasswordRules: View {
 			}
 		})
 
+		let isLoading = response.isEmpty && error == nil
+		let displayRules = isLoading ? Self.placeholderRules : responses
+
 		Group {
 			#if os(watchOS)
-			RulesList(rules: responses, showFavicon: showFavicon)
+			RulesList(rules: displayRules, showFavicon: showFavicon)
 			#else
 			if isCompact {
-				RulesList(rules: responses, showFavicon: showFavicon)
+				RulesList(rules: displayRules, showFavicon: showFavicon)
 			} else {
-				RulesTable(rules: responses, showFavicon: showFavicon, faviconHeight: faviconHeight, sortOrder: $sortOrder)
+				RulesTable(rules: displayRules, showFavicon: showFavicon, faviconHeight: faviconHeight, sortOrder: $sortOrder)
 			}
 			#endif
 		}
+		.redacted(reason: isLoading ? .placeholder : [])
+		.allowsHitTesting(!isLoading)
 		.toolbar {
 			ToolbarItemGroup(placement: .automatic) {
 				#if os(watchOS)
