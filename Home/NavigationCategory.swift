@@ -12,7 +12,7 @@ enum NavigationCategory: View, CaseIterable {
 		case .change:
 			ChangePasswordURLs()
 		case .appended:
-			Appended2FA()
+			Appended2FAs()
 		}
 	}
 

@@ -25,7 +25,7 @@
 		17A5E5FF2E7378960040F28F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 17A5E5FD2E7378960040F28F /* AppIcon.icon */; };
 		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
-		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
+		17BFF7042ABF7D50004047AD /* Appended2FAs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FAs.swift */; };
 		17C2FD012EFCA18700CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
 		17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
 		17CFADC92ADC4C2400BDEFBD /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
@@ -38,13 +38,21 @@
 		17CFADD02ADC4C2400BDEFBD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
 		17CFADD12ADC4C2400BDEFBD /* PasswordRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */; };
 		17CFADD22ADC4C2400BDEFBD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
-		17CFADD32ADC4C2400BDEFBD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
+		17CFADD32ADC4C2400BDEFBD /* Appended2FAs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FAs.swift */; };
 		17CFADD42ADC4C2400BDEFBD /* PasswordRuleChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */; };
 		17CFADD62ADC754600BDEFBD /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD52ADC754600BDEFBD /* RefreshButton.swift */; };
 		17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD52ADC754600BDEFBD /* RefreshButton.swift */; };
 		17CFADD92ADC756800BDEFBD /* RulesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD82ADC756800BDEFBD /* RulesList.swift */; };
 		17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD82ADC756800BDEFBD /* RulesList.swift */; };
 		17CFADDC2ADC758000BDEFBD /* RulesTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADDB2ADC758000BDEFBD /* RulesTable.swift */; };
+		AA0011000000000000000011 /* PasswordRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000001 /* PasswordRule.swift */; };
+		AA0012000000000000000012 /* ChangePasswordURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002000000000000000002 /* ChangePasswordURL.swift */; };
+		AA0013000000000000000013 /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0003000000000000000003 /* Appended2FA.swift */; };
+		AA0014000000000000000014 /* SharedCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0004000000000000000004 /* SharedCredential.swift */; };
+		AA0021000000000000000021 /* PasswordRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000001 /* PasswordRule.swift */; };
+		AA0022000000000000000022 /* ChangePasswordURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002000000000000000002 /* ChangePasswordURL.swift */; };
+		AA0023000000000000000023 /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0003000000000000000003 /* Appended2FA.swift */; };
+		AA0024000000000000000024 /* SharedCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0004000000000000000004 /* SharedCredential.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,11 +106,15 @@
 		17A5E5FD2E7378960040F28F /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
-		17BFF7032ABF7D50004047AD /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
+		17BFF7032ABF7D50004047AD /* Appended2FAs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FAs.swift; sourceTree = "<group>"; };
 		17C2FD002EFCA18700CF385C /* NavigationCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCategory.swift; sourceTree = "<group>"; };
 		17CFADD52ADC754600BDEFBD /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		17CFADD82ADC756800BDEFBD /* RulesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesList.swift; sourceTree = "<group>"; };
 		17CFADDB2ADC758000BDEFBD /* RulesTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesTable.swift; sourceTree = "<group>"; };
+		AA0001000000000000000001 /* PasswordRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRule.swift; sourceTree = "<group>"; };
+		AA0002000000000000000002 /* ChangePasswordURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordURL.swift; sourceTree = "<group>"; };
+		AA0003000000000000000003 /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
+		AA0004000000000000000004 /* SharedCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredential.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +150,7 @@
 				177688602AD9D65A00F68E88 /* Home */,
 				17882AC22AC848380037E3A6 /* Rule */,
 				17882AC32AC8483E0037E3A6 /* Domains */,
+				AA0099000000000000000099 /* Cache */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
 				17A5E5FD2E7378960040F28F /* AppIcon.icon */,
@@ -187,7 +200,7 @@
 			children = (
 				1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */,
 				17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */,
-				17BFF7032ABF7D50004047AD /* Appended2FA.swift */,
+				17BFF7032ABF7D50004047AD /* Appended2FAs.swift */,
 			);
 			path = Domains;
 			sourceTree = "<group>";
@@ -198,6 +211,17 @@
 				17A3A7652ADC8A3E00CF82FD /* Tests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		AA0099000000000000000099 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				AA0001000000000000000001 /* PasswordRule.swift */,
+				AA0002000000000000000002 /* ChangePasswordURL.swift */,
+				AA0003000000000000000003 /* Appended2FA.swift */,
+				AA0004000000000000000004 /* SharedCredential.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,7 +364,7 @@
 				17CFADD12ADC4C2400BDEFBD /* PasswordRuleDetail.swift in Sources */,
 				17CFADD22ADC4C2400BDEFBD /* SharedCredentials.swift in Sources */,
 				17CFADCC2ADC4C2400BDEFBD /* ContentView.swift in Sources */,
-				17CFADD32ADC4C2400BDEFBD /* Appended2FA.swift in Sources */,
+				17CFADD32ADC4C2400BDEFBD /* Appended2FAs.swift in Sources */,
 				17CFADD42ADC4C2400BDEFBD /* PasswordRuleChips.swift in Sources */,
 				17CFADCF2ADC4C2400BDEFBD /* ChangePasswordURLs.swift in Sources */,
 				17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */,
@@ -348,6 +372,10 @@
 				17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */,
 				17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */,
 				17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */,
+				AA0021000000000000000021 /* PasswordRule.swift in Sources */,
+				AA0022000000000000000022 /* ChangePasswordURL.swift in Sources */,
+				AA0023000000000000000023 /* Appended2FA.swift in Sources */,
+				AA0024000000000000000024 /* SharedCredential.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,12 +393,16 @@
 				17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */,
 				173245232AC4CE99005C3AC2 /* Rule.swift in Sources */,
 				1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */,
-				17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */,
+				17BFF7042ABF7D50004047AD /* Appended2FAs.swift in Sources */,
 				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
 				17CFADD62ADC754600BDEFBD /* RefreshButton.swift in Sources */,
 				173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */,
 				174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */,
 				17CFADD92ADC756800BDEFBD /* RulesList.swift in Sources */,
+				AA0011000000000000000011 /* PasswordRule.swift in Sources */,
+				AA0012000000000000000012 /* ChangePasswordURL.swift in Sources */,
+				AA0013000000000000000013 /* Appended2FA.swift in Sources */,
+				AA0014000000000000000014 /* SharedCredential.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +453,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
 		};
@@ -448,7 +480,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};

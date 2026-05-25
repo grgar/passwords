@@ -1,7 +1,10 @@
 import SwiftUI
+import SwiftData
 
-struct Appended2FA: View {
-	@State var response: [String] = []
+struct Appended2FAs: View {
+	@Query(sort: \Appended2FA.domain) private var cachedDomains: [Appended2FA]
+	@Environment(\.modelContext) private var modelContext
+
 	@State var error: Error?
 
 	@State var searchText = ""
@@ -10,10 +13,19 @@ struct Appended2FA: View {
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/websites-that-append-2fa-to-password.json")!
 
+	private var domains: [String] { cachedDomains.map(\.domain) }
+
+	@MainActor
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
 		case let .success(data):
-			response = data
+			let serverDomains = Set(data)
+			for domain in data {
+				modelContext.insert(Appended2FA(domain: domain))
+			}
+			for cached in cachedDomains where !serverDomains.contains(cached.domain) {
+				modelContext.delete(cached)
+			}
 			error = nil
 		case let .failure(error):
 			self.error = error
@@ -31,7 +43,7 @@ struct Appended2FA: View {
 	}
 
 	var body: some View {
-		let responses = response
+		let responses = domains
 			.filter { searchText == "" || $0.localizedCaseInsensitiveContains(searchText) }
 
 		List {
@@ -58,8 +70,8 @@ struct Appended2FA: View {
 			await reload()
 		}
 		.task {
-			guard response.isEmpty else { return }
-			await reload(cache: .returnCacheDataElseLoad)
+			guard cachedDomains.isEmpty else { return }
+			await reload()
 		}
 		.navigationTitle(Text("Appended 2FA"))
 		#if os(iOS)
@@ -68,14 +80,31 @@ struct Appended2FA: View {
 	}
 }
 
+@MainActor
+private func makeAppended2FAsPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
+	let container = try! ModelContainer(
+		for: Appended2FA.self,
+		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+	)
+	populate(container.mainContext)
+	return container
+}
+
 #Preview("Local") {
 	NavigationStack {
-		Appended2FA(response: ["a.com", "b.com"])
+		Appended2FAs()
 	}
+	.modelContainer(makeAppended2FAsPreviewContainer {
+		$0.insert(Appended2FA(domain: "a.com"))
+		$0.insert(Appended2FA(domain: "b.com"))
+	})
 }
 
 #Preview("Help") {
 	NavigationStack {
-		Appended2FA(response: ["a.com"], showHelp: true)
+		Appended2FAs(showHelp: true)
 	}
+	.modelContainer(makeAppended2FAsPreviewContainer {
+		$0.insert(Appended2FA(domain: "a.com"))
+	})
 }

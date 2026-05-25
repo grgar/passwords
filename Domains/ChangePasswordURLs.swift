@@ -1,7 +1,10 @@
 import SwiftUI
+import SwiftData
 
 struct ChangePasswordURLs: View {
-	@State var response: [String: URL] = [:]
+	@Query(sort: \ChangePasswordURL.domain) private var cachedURLs: [ChangePasswordURL]
+	@Environment(\.modelContext) private var modelContext
+
 	@State var error: Error?
 
 	@State var searchText = ""
@@ -10,10 +13,23 @@ struct ChangePasswordURLs: View {
 
 	@AppStorage("showFavicon") private var showFavicon = true
 
+	private var urlPairs: [(key: String, value: URL)] {
+		cachedURLs.compactMap { cached in
+			URL(string: cached.urlString).map { url in (key: cached.domain, value: url) }
+		}
+	}
+
+	@MainActor
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
 		case let .success(data):
-			response = data
+			let serverDomains = Set(data.keys)
+			for (domain, url) in data {
+				modelContext.insert(ChangePasswordURL(domain: domain, urlString: url.absoluteString))
+			}
+			for cached in cachedURLs where !serverDomains.contains(cached.domain) {
+				modelContext.delete(cached)
+			}
 			error = nil
 		case let .failure(error):
 			self.error = error
@@ -31,8 +47,7 @@ struct ChangePasswordURLs: View {
 	}
 
 	var body: some View {
-		let responses = response
-			.sorted { $0.key.lexicographicallyPrecedes($1.key) }
+		let responses = urlPairs
 			.filter { searchText == "" || $0.key.localizedCaseInsensitiveContains(searchText) }
 
 		List {
@@ -114,8 +129,8 @@ struct ChangePasswordURLs: View {
 			await reload()
 		}
 		.task {
-			guard response.isEmpty else { return }
-			await reload(cache: .returnCacheDataElseLoad)
+			guard cachedURLs.isEmpty else { return }
+			await reload()
 		}
 		.navigationTitle(Text("Change Password"))
 		#if os(iOS)
@@ -124,17 +139,39 @@ struct ChangePasswordURLs: View {
 	}
 }
 
+@MainActor
+private func makeChangePasswordURLsPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
+	let container = try! ModelContainer(
+		for: ChangePasswordURL.self,
+		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+	)
+	populate(container.mainContext)
+	return container
+}
+
 #Preview("Local") {
-	ChangePasswordURLs(response: ["example.com": URL(string: "https://example.com/.well-known/change-password")!])
+	ChangePasswordURLs()
+		.modelContainer(makeChangePasswordURLsPreviewContainer {
+			$0.insert(ChangePasswordURL(
+				domain: "example.com",
+				urlString: "https://example.com/.well-known/change-password"
+			))
+		})
 }
 
 #Preview("Remote") {
 	NavigationStack {
 		ChangePasswordURLs()
 	}
+	.modelContainer(makeChangePasswordURLsPreviewContainer())
 }
 
 #Preview("Error") {
-	ChangePasswordURLs(response: ["example.com": URL(string: "https://example.com/.well-known/change-password")!],
-	                   error: URLError(URLError.notConnectedToInternet))
+	ChangePasswordURLs(error: URLError(URLError.notConnectedToInternet))
+		.modelContainer(makeChangePasswordURLsPreviewContainer {
+			$0.insert(ChangePasswordURL(
+				domain: "example.com",
+				urlString: "https://example.com/.well-known/change-password"
+			))
+		})
 }

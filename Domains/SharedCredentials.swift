@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct SharedCredentials: View {
 	struct Entry: Codable, Hashable {
@@ -8,17 +9,44 @@ struct SharedCredentials: View {
 		var fromDomainsAreObsoleted: Bool?
 	}
 
-	@State var response: [Entry] = []
+	@Query private var cachedCredentials: [SharedCredential]
+	@Environment(\.modelContext) private var modelContext
+
 	@State var error: Error?
 
 	@State var searchText = ""
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/shared-credentials.json")!
 
+	private var entries: [Entry] {
+		cachedCredentials.map {
+			Entry(
+				shared: $0.shared.isEmpty ? nil : $0.shared,
+				from: $0.from.isEmpty ? nil : $0.from,
+				to: $0.to.isEmpty ? nil : $0.to,
+				fromDomainsAreObsoleted: $0.fromDomainsAreObsoleted
+			)
+		}
+	}
+
+	@MainActor
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
 		case let .success(data):
-			response = data
+			let serverIDs = Set(data.map {
+				SharedCredential.makeID(shared: $0.shared, from: $0.from, to: $0.to)
+			})
+			for entry in data {
+				modelContext.insert(SharedCredential(
+					shared: entry.shared ?? [],
+					from: entry.from ?? [],
+					to: entry.to ?? [],
+					fromDomainsAreObsoleted: entry.fromDomainsAreObsoleted ?? false
+				))
+			}
+			for cached in cachedCredentials where !serverIDs.contains(cached.entryID) {
+				modelContext.delete(cached)
+			}
 			error = nil
 		case let .failure(error):
 			self.error = error
@@ -36,7 +64,7 @@ struct SharedCredentials: View {
 	}
 
 	var body: some View {
-		let responses = response
+		let responses = entries
 			.filter { searchText == "" || (($0.shared ?? []) + ($0.from ?? []) + ($0.to ?? [])).joined(separator: "§").localizedCaseInsensitiveContains(searchText) }
 
 		List {
@@ -97,8 +125,8 @@ struct SharedCredentials: View {
 			await reload()
 		}
 		.task {
-			guard response.isEmpty else { return }
-			await reload(cache: .returnCacheDataElseLoad)
+			guard cachedCredentials.isEmpty else { return }
+			await reload()
 		}
 		.navigationTitle(Text("Shared Credentials"))
 		#if os(iOS)
@@ -107,16 +135,27 @@ struct SharedCredentials: View {
 	}
 }
 
+@MainActor
+private func makeSharedCredentialsPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
+	let container = try! ModelContainer(
+		for: SharedCredential.self,
+		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+	)
+	populate(container.mainContext)
+	return container
+}
+
 #Preview("Local") {
 	NavigationStack {
-		SharedCredentials(response: [
-			.init(shared: ["example.com"]),
-			.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: false),
-			.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true),
-			.init(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true),
-			.init(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
-			.init(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
-			.init(shared: ["a.com", "b.com", "c.com", "d.com"]),
-		])
+		SharedCredentials()
 	}
+	.modelContainer(makeSharedCredentialsPreviewContainer {
+		$0.insert(SharedCredential(shared: ["example.com"]))
+		$0.insert(SharedCredential(from: ["a.com"], to: ["b.com"]))
+		$0.insert(SharedCredential(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true))
+		$0.insert(SharedCredential(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true))
+		$0.insert(SharedCredential(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true))
+		$0.insert(SharedCredential(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true))
+		$0.insert(SharedCredential(shared: ["a.com", "b.com", "c.com", "d.com"]))
+	})
 }

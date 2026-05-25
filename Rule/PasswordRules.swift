@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct PasswordRules: View {
 	struct IngestRule: Codable {
@@ -9,7 +10,9 @@ struct PasswordRules: View {
 		}
 	}
 
-	@State var response: [Rule] = []
+	@Query(sort: \PasswordRule.domain) private var cachedRules: [PasswordRule]
+	@Environment(\.modelContext) private var modelContext
+
 	@State var error: DecodingError?
 
 	@State var searchText = ""
@@ -18,11 +21,21 @@ struct PasswordRules: View {
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/password-rules.json")!
 
+	private var rules: [Rule] {
+		cachedRules.map { Rule(domain: $0.domain, rule: $0.ruleString) }
+	}
+
+	@MainActor
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
 		switch await Self.reload(cache: cache) {
 		case let .success(data):
-			response = data
-				.map { Rule(domain: $0.key, rule: $0.value.rule) }
+			let serverDomains = Set(data.keys)
+			for (domain, ingestRule) in data {
+				modelContext.insert(PasswordRule(domain: domain, ruleString: ingestRule.rule))
+			}
+			for cached in cachedRules where !serverDomains.contains(cached.domain) {
+				modelContext.delete(cached)
+			}
 			error = nil
 		case let .failure(error):
 			self.error = error
@@ -55,7 +68,7 @@ struct PasswordRules: View {
 	@State private var sortOrder = [KeyPathComparator(\Rule.id)]
 
 	var body: some View {
-		let responses = response
+		let responses = rules
 			.filter { searchText == "" || $0.id.localizedCaseInsensitiveContains(searchText) }
 			.sorted(using: sortOrder)
 		let isError = Binding(get: {
@@ -110,8 +123,8 @@ struct PasswordRules: View {
 			await reload()
 		}
 		.task {
-			guard response.isEmpty else { return }
-			await reload(cache: .returnCacheDataElseLoad)
+			guard cachedRules.isEmpty else { return }
+			await reload()
 		}
 		.navigationTitle(Text("Password Rules"))
 		#if os(iOS)
@@ -120,16 +133,30 @@ struct PasswordRules: View {
 	}
 }
 
+@MainActor
+private func makePasswordRulesPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
+	let container = try! ModelContainer(
+		for: PasswordRule.self,
+		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+	)
+	populate(container.mainContext)
+	return container
+}
+
 #Preview("Local") {
 	NavigationStack {
-		PasswordRules(response: [.init(id: "example.com", originalRule: "maxlength: 5;")])
+		PasswordRules()
 	}
+	.modelContainer(makePasswordRulesPreviewContainer {
+		$0.insert(PasswordRule(domain: "example.com", ruleString: "maxlength: 5;"))
+	})
 }
 
 #Preview("Remote") {
 	NavigationStack {
 		PasswordRules()
 	}
+	.modelContainer(makePasswordRulesPreviewContainer())
 }
 
 #Preview("Table", traits: .fixedLayout(width: 960, height: 640)) {
@@ -146,10 +173,12 @@ struct PasswordRules: View {
 	} detail: {
 		EmptyView()
 	}
+	.modelContainer(makePasswordRulesPreviewContainer())
 }
 
 #Preview("Error") {
 	NavigationStack {
 		PasswordRules(error: DecodingError.typeMismatch(String.self, .init(codingPath: [], debugDescription: "")))
 	}
+	.modelContainer(makePasswordRulesPreviewContainer())
 }

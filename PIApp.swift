@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct PIApp: App {
@@ -6,5 +7,11 @@ struct PIApp: App {
 		WindowGroup {
 			ContentView()
 		}
+		.modelContainer(for: [
+			PasswordRule.self,
+			ChangePasswordURL.self,
+			Appended2FA.self,
+			SharedCredential.self,
+		])
 	}
 }
