@@ -9,8 +9,28 @@ struct PasswordRules: View {
 		}
 	}
 
+	/// Type-erasing wrapper so any `Error` can be stored in `@State` and
+	/// presented via `.alert(isPresented:error:actions:)`, which requires
+	/// `LocalizedError`.
+	struct LoadError: LocalizedError {
+		let underlying: any Error
+
+		var errorDescription: String? {
+			(underlying as? any LocalizedError)?.errorDescription
+				?? underlying.localizedDescription
+		}
+
+		var failureReason: String? {
+			(underlying as? any LocalizedError)?.failureReason
+		}
+
+		var recoverySuggestion: String? {
+			(underlying as? any LocalizedError)?.recoverySuggestion
+		}
+	}
+
 	@State var response: [Rule] = []
-	@State var error: DecodingError?
+	@State var error: LoadError?
 
 	@State var searchText = ""
 
@@ -38,20 +58,17 @@ struct PasswordRules: View {
 				.map { Rule(domain: $0.key, rule: $0.value.rule) }
 			error = nil
 		case let .failure(error):
-			self.error = error
+			self.error = LoadError(underlying: error)
 		}
 	}
 
-	static func reload(cache: NSURLRequest.CachePolicy) async -> Result<[String: IngestRule], DecodingError> {
+	static func reload(cache: NSURLRequest.CachePolicy) async -> Result<[String: IngestRule], any Error> {
 		do {
 			let (response, _) = try await URLSession.shared.data(for: URLRequest(url: getURL, cachePolicy: cache))
 			let data = try JSONDecoder().decode([String: IngestRule].self, from: response)
 			return .success(data)
 		} catch {
-			if let error = error as? DecodingError {
-				return .failure(error)
-			}
-			return .failure(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unknown error", underlyingError: error)))
+			return .failure(error)
 		}
 	}
 
@@ -166,8 +183,14 @@ struct PasswordRules: View {
 	}
 }
 
-#Preview("Error") {
+#Preview("Error (decoding)") {
 	NavigationStack {
-		PasswordRules(error: DecodingError.typeMismatch(String.self, .init(codingPath: [], debugDescription: "")))
+		PasswordRules(error: PasswordRules.LoadError(underlying: DecodingError.typeMismatch(String.self, .init(codingPath: [], debugDescription: ""))))
+	}
+}
+
+#Preview("Error (network)") {
+	NavigationStack {
+		PasswordRules(error: PasswordRules.LoadError(underlying: URLError(.notConnectedToInternet)))
 	}
 }
