@@ -80,31 +80,34 @@ struct Appended2FAs: View {
 	}
 }
 
-@MainActor
-private func makeAppended2FAsPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
-	let container = try! ModelContainer(
-		for: Appended2FA.self,
-		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-	)
-	populate(container.mainContext)
-	return container
+struct SampleAppended2FAs: PreviewModifier {
+	@MainActor static func makeSharedContext() throws -> ModelContainer {
+		let container = try ModelContainer(
+			for: Appended2FA.self,
+			configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+		)
+		container.mainContext.insert(Appended2FA(domain: "a.com"))
+		container.mainContext.insert(Appended2FA(domain: "b.com"))
+		return container
+	}
+
+	func body(content: Content, context: ModelContainer) -> some View {
+		content.modelContainer(context)
+	}
 }
 
-#Preview("Local") {
+extension PreviewTrait where T == Preview.ViewTraits {
+	static var sampleAppended2FAs: Self = .modifier(SampleAppended2FAs())
+}
+
+#Preview("Local", traits: .sampleAppended2FAs) {
 	NavigationStack {
 		Appended2FAs()
 	}
-	.modelContainer(makeAppended2FAsPreviewContainer {
-		$0.insert(Appended2FA(domain: "a.com"))
-		$0.insert(Appended2FA(domain: "b.com"))
-	})
 }
 
-#Preview("Help") {
+#Preview("Help", traits: .sampleAppended2FAs) {
 	NavigationStack {
 		Appended2FAs(showHelp: true)
 	}
-	.modelContainer(makeAppended2FAsPreviewContainer {
-		$0.insert(Appended2FA(domain: "a.com"))
-	})
 }

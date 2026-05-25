@@ -31,4 +31,10 @@ struct ContentView: View {
 
 #Preview {
 	ContentView()
+		.modelContainer(for: [
+			PasswordRule.self,
+			ChangePasswordURL.self,
+			Appended2FA.self,
+			SharedCredential.self,
+		], inMemory: true)
 }

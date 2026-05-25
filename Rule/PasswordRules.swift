@@ -133,33 +133,39 @@ struct PasswordRules: View {
 	}
 }
 
-@MainActor
-private func makePasswordRulesPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
-	let container = try! ModelContainer(
-		for: PasswordRule.self,
-		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-	)
-	populate(container.mainContext)
-	return container
+struct SamplePasswordRules: PreviewModifier {
+	@MainActor static func makeSharedContext() throws -> ModelContainer {
+		let container = try ModelContainer(
+			for: PasswordRule.self,
+			configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+		)
+		container.mainContext.insert(PasswordRule(domain: "example.com", ruleString: "maxlength: 5;"))
+		return container
+	}
+
+	func body(content: Content, context: ModelContainer) -> some View {
+		content.modelContainer(context)
+	}
 }
 
-#Preview("Local") {
+extension PreviewTrait where T == Preview.ViewTraits {
+	static var samplePasswordRules: Self = .modifier(SamplePasswordRules())
+}
+
+#Preview("Local", traits: .samplePasswordRules) {
 	NavigationStack {
 		PasswordRules()
 	}
-	.modelContainer(makePasswordRulesPreviewContainer {
-		$0.insert(PasswordRule(domain: "example.com", ruleString: "maxlength: 5;"))
-	})
 }
 
 #Preview("Remote") {
 	NavigationStack {
 		PasswordRules()
 	}
-	.modelContainer(makePasswordRulesPreviewContainer())
+	.modelContainer(for: PasswordRule.self, inMemory: true)
 }
 
-#Preview("Table", traits: .fixedLayout(width: 960, height: 640)) {
+#Preview("Table", traits: .fixedLayout(width: 960, height: 640), .samplePasswordRules) {
 	NavigationSplitView {
 		List {
 			NavigationLink {
@@ -173,12 +179,10 @@ private func makePasswordRulesPreviewContainer(populate: (ModelContext) -> Void 
 	} detail: {
 		EmptyView()
 	}
-	.modelContainer(makePasswordRulesPreviewContainer())
 }
 
-#Preview("Error") {
+#Preview("Error", traits: .samplePasswordRules) {
 	NavigationStack {
 		PasswordRules(error: DecodingError.typeMismatch(String.self, .init(codingPath: [], debugDescription: "")))
 	}
-	.modelContainer(makePasswordRulesPreviewContainer())
 }

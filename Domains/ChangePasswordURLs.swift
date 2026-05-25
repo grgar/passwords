@@ -139,39 +139,39 @@ struct ChangePasswordURLs: View {
 	}
 }
 
-@MainActor
-private func makeChangePasswordURLsPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
-	let container = try! ModelContainer(
-		for: ChangePasswordURL.self,
-		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-	)
-	populate(container.mainContext)
-	return container
+struct SampleChangePasswordURLs: PreviewModifier {
+	@MainActor static func makeSharedContext() throws -> ModelContainer {
+		let container = try ModelContainer(
+			for: ChangePasswordURL.self,
+			configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+		)
+		container.mainContext.insert(ChangePasswordURL(
+			domain: "example.com",
+			urlString: "https://example.com/.well-known/change-password"
+		))
+		return container
+	}
+
+	func body(content: Content, context: ModelContainer) -> some View {
+		content.modelContainer(context)
+	}
 }
 
-#Preview("Local") {
+extension PreviewTrait where T == Preview.ViewTraits {
+	static var sampleChangePasswordURLs: Self = .modifier(SampleChangePasswordURLs())
+}
+
+#Preview("Local", traits: .sampleChangePasswordURLs) {
 	ChangePasswordURLs()
-		.modelContainer(makeChangePasswordURLsPreviewContainer {
-			$0.insert(ChangePasswordURL(
-				domain: "example.com",
-				urlString: "https://example.com/.well-known/change-password"
-			))
-		})
 }
 
 #Preview("Remote") {
 	NavigationStack {
 		ChangePasswordURLs()
 	}
-	.modelContainer(makeChangePasswordURLsPreviewContainer())
+	.modelContainer(for: ChangePasswordURL.self, inMemory: true)
 }
 
-#Preview("Error") {
+#Preview("Error", traits: .sampleChangePasswordURLs) {
 	ChangePasswordURLs(error: URLError(URLError.notConnectedToInternet))
-		.modelContainer(makeChangePasswordURLsPreviewContainer {
-			$0.insert(ChangePasswordURL(
-				domain: "example.com",
-				urlString: "https://example.com/.well-known/change-password"
-			))
-		})
 }

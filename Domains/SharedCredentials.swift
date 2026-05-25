@@ -135,27 +135,34 @@ struct SharedCredentials: View {
 	}
 }
 
-@MainActor
-private func makeSharedCredentialsPreviewContainer(populate: (ModelContext) -> Void = { _ in }) -> ModelContainer {
-	let container = try! ModelContainer(
-		for: SharedCredential.self,
-		configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-	)
-	populate(container.mainContext)
-	return container
+struct SampleSharedCredentials: PreviewModifier {
+	@MainActor static func makeSharedContext() throws -> ModelContainer {
+		let container = try ModelContainer(
+			for: SharedCredential.self,
+			configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+		)
+		let context = container.mainContext
+		context.insert(SharedCredential(shared: ["example.com"]))
+		context.insert(SharedCredential(from: ["a.com"], to: ["b.com"]))
+		context.insert(SharedCredential(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true))
+		context.insert(SharedCredential(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true))
+		context.insert(SharedCredential(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true))
+		context.insert(SharedCredential(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true))
+		context.insert(SharedCredential(shared: ["a.com", "b.com", "c.com", "d.com"]))
+		return container
+	}
+
+	func body(content: Content, context: ModelContainer) -> some View {
+		content.modelContainer(context)
+	}
 }
 
-#Preview("Local") {
+extension PreviewTrait where T == Preview.ViewTraits {
+	static var sampleSharedCredentials: Self = .modifier(SampleSharedCredentials())
+}
+
+#Preview("Local", traits: .sampleSharedCredentials) {
 	NavigationStack {
 		SharedCredentials()
 	}
-	.modelContainer(makeSharedCredentialsPreviewContainer {
-		$0.insert(SharedCredential(shared: ["example.com"]))
-		$0.insert(SharedCredential(from: ["a.com"], to: ["b.com"]))
-		$0.insert(SharedCredential(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true))
-		$0.insert(SharedCredential(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true))
-		$0.insert(SharedCredential(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true))
-		$0.insert(SharedCredential(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true))
-		$0.insert(SharedCredential(shared: ["a.com", "b.com", "c.com", "d.com"]))
-	})
 }
