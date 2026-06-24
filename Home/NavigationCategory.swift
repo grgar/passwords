@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum NavigationCategory: String, View, CaseIterable {
-	case rules, shared, change, appended
+	case rules, shared, change, appended, embeddedThirdParty, appIDs
 
 	var body: some View {
 		switch self {
@@ -13,6 +13,10 @@ enum NavigationCategory: String, View, CaseIterable {
 			ChangePasswordURLs()
 		case .appended:
 			Appended2FA()
+		case .embeddedThirdParty:
+			EmbeddedThirdParty()
+		case .appIDs:
+			AppIDCredentials()
 		}
 	}
 
@@ -47,6 +51,10 @@ enum NavigationCategory: String, View, CaseIterable {
 			"Change Password URLs"
 		case .appended:
 			"Appended 2FA"
+		case .embeddedThirdParty:
+			"Embedded Third-Party"
+		case .appIDs:
+			"App ID Credentials"
 		}
 	}
 
@@ -60,6 +68,10 @@ enum NavigationCategory: String, View, CaseIterable {
 			"To drive the adoption of strong passwords, it's useful to be able to take users directly to websites' change password pages."
 		case .appended:
 			"Some websites use a two-factor authentication scheme where the user must append a generated code to their password when signing in."
+		case .embeddedThirdParty:
+			"Domains that, when embedded as a third party, ask for credentials belonging to a different service."
+		case .appIDs:
+			"Native apps and the websites they share credentials with, used for AutoFill suggestions on iOS 17.4 and later."
 		}
 	}
 
@@ -73,6 +85,10 @@ enum NavigationCategory: String, View, CaseIterable {
 			"rectangle.and.pencil.and.ellipsis"
 		case .appended:
 			"123.rectangle"
+		case .embeddedThirdParty:
+			"puzzlepiece.extension"
+		case .appIDs:
+			"apps.iphone"
 		}
 	}
 }

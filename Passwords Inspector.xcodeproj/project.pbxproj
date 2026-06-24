@@ -47,6 +47,10 @@
 		17CFADD92ADC756800BDEFBD /* RulesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD82ADC756800BDEFBD /* RulesList.swift */; };
 		17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD82ADC756800BDEFBD /* RulesList.swift */; };
 		17CFADDC2ADC758000BDEFBD /* RulesTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADDB2ADC758000BDEFBD /* RulesTable.swift */; };
+		CC01000000000000000000A2 /* EmbeddedThirdParty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000A1 /* EmbeddedThirdParty.swift */; };
+		CC01000000000000000000A3 /* EmbeddedThirdParty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000A1 /* EmbeddedThirdParty.swift */; };
+		CC01000000000000000000B2 /* AppIDCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000B1 /* AppIDCredentials.swift */; };
+		CC01000000000000000000B3 /* AppIDCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000B1 /* AppIDCredentials.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +110,8 @@
 		17CFADD52ADC754600BDEFBD /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		17CFADD82ADC756800BDEFBD /* RulesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesList.swift; sourceTree = "<group>"; };
 		17CFADDB2ADC758000BDEFBD /* RulesTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesTable.swift; sourceTree = "<group>"; };
+		CC01000000000000000000A1 /* EmbeddedThirdParty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedThirdParty.swift; sourceTree = "<group>"; };
+		CC01000000000000000000B1 /* AppIDCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDCredentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +148,7 @@
 				177688602AD9D65A00F68E88 /* Home */,
 				17882AC22AC848380037E3A6 /* Rule */,
 				17882AC32AC8483E0037E3A6 /* Domains */,
+				CC01000000000000000000C1 /* AppIDs */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
 				17A5E5FD2E7378960040F28F /* AppIcon.icon */,
@@ -192,8 +199,17 @@
 				1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */,
 				17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */,
 				17BFF7032ABF7D50004047AD /* Appended2FA.swift */,
+				CC01000000000000000000A1 /* EmbeddedThirdParty.swift */,
 			);
 			path = Domains;
+			sourceTree = "<group>";
+		};
+		CC01000000000000000000C1 /* AppIDs */ = {
+			isa = PBXGroup;
+			children = (
+				CC01000000000000000000B1 /* AppIDCredentials.swift */,
+			);
+			path = AppIDs;
 			sourceTree = "<group>";
 		};
 		17A3A7642ADC8A3E00CF82FD /* Tests */ = {
@@ -361,6 +377,8 @@
 				17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */,
 				17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */,
 				17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */,
+				CC01000000000000000000A3 /* EmbeddedThirdParty.swift in Sources */,
+				CC01000000000000000000B3 /* AppIDCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +403,8 @@
 				173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */,
 				174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */,
 				17CFADD92ADC756800BDEFBD /* RulesList.swift in Sources */,
+				CC01000000000000000000A2 /* EmbeddedThirdParty.swift in Sources */,
+				CC01000000000000000000B2 /* AppIDCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

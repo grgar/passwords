@@ -9,19 +9,26 @@ struct SharedCredentials: View {
 	}
 
 	@State var response: [Entry] = []
+	@State var historicalResponse: [Entry] = []
 	@State var error: Error?
 
 	@State var searchText = ""
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/shared-credentials.json")!
+	static let historicalURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/shared-credentials-historical.json")!
 
 	func reload(cache: NSURLRequest.CachePolicy = .reloadIgnoringLocalCacheData) async {
-		switch await Self.reload(cache: cache) {
+		async let mainResult = Self.reload(cache: cache)
+		async let historicalResult = Self.reloadFrom(Self.historicalURL, cache: cache)
+		switch await mainResult {
 		case let .success(data):
 			response = data
 			error = nil
 		case let .failure(error):
 			self.error = error
+		}
+		if case let .success(data) = await historicalResult {
+			historicalResponse = data
 		}
 	}
 
@@ -38,8 +45,12 @@ struct SharedCredentials: View {
 	}
 
 	static func reload(cache: NSURLRequest.CachePolicy) async -> Result<[Entry], Error> {
+		await reloadFrom(getURL, cache: cache)
+	}
+
+	static func reloadFrom(_ url: URL, cache: NSURLRequest.CachePolicy) async -> Result<[Entry], Error> {
 		do {
-			let (response, _) = try await URLSession.shared.data(for: URLRequest(url: getURL, cachePolicy: cache))
+			let (response, _) = try await URLSession.shared.data(for: URLRequest(url: url, cachePolicy: cache))
 			let data = try JSONDecoder().decode([Entry].self, from: response)
 			return .success(data)
 		} catch {
@@ -48,8 +59,11 @@ struct SharedCredentials: View {
 	}
 
 	var body: some View {
-		let responses = response
-			.filter { searchText == "" || (($0.shared ?? []) + ($0.from ?? []) + ($0.to ?? [])).joined(separator: "§").localizedCaseInsensitiveContains(searchText) }
+		let domainFilter: (Entry) -> Bool = { entry in
+			searchText == "" || ((entry.shared ?? []) + (entry.from ?? []) + (entry.to ?? [])).joined(separator: "§").localizedCaseInsensitiveContains(searchText)
+		}
+		let responses = response.filter(domainFilter)
+		let historicalResponses = historicalResponse.filter(domainFilter)
 
 		List {
 			Section {
@@ -103,6 +117,25 @@ struct SharedCredentials: View {
 			} footer: {
 				Text("Credentials to be shared one-way.")
 			}
+
+			if !historicalResponses.isEmpty {
+				Section {
+					ForEach(historicalResponses.filter { $0.shared != nil }, id: \.hashValue) { response in
+						if let shared = response.shared {
+							VStack(alignment: .leading) {
+								ForEach(shared, id: \.self) { shared in
+									Text(shared)
+								}
+							}
+							.multilineTextAlignment(.leading)
+						}
+					}
+				} header: {
+					Text("Historical")
+				} footer: {
+					Text("Formerly affiliated domains. Useful for suppressing password reuse warnings across domains that were once associated.")
+				}
+			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search Domains"))
 		.refreshable {
@@ -123,14 +156,20 @@ struct SharedCredentials: View {
 
 #Preview("Local") {
 	NavigationStack {
-		SharedCredentials(response: [
-			.init(shared: ["example.com"]),
-			.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: false),
-			.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true),
-			.init(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true),
-			.init(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
-			.init(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
-			.init(shared: ["a.com", "b.com", "c.com", "d.com"]),
-		])
+		SharedCredentials(
+			response: [
+				.init(shared: ["example.com"]),
+				.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: false),
+				.init(from: ["a.com"], to: ["b.com"], fromDomainsAreObsoleted: true),
+				.init(from: ["a.com", "b.com"], to: ["c.com"], fromDomainsAreObsoleted: true),
+				.init(from: ["a.com", "b.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
+				.init(from: ["a.com"], to: ["c.com", "d.com"], fromDomainsAreObsoleted: true),
+				.init(shared: ["a.com", "b.com", "c.com", "d.com"]),
+			],
+			historicalResponse: [
+				.init(shared: ["old1.com", "old2.com"]),
+				.init(shared: ["formerly-affiliated.com", "split-off.com"]),
+			]
+		)
 	}
 }
