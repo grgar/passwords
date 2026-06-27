@@ -25,6 +25,18 @@ struct SharedCredentials: View {
 		}
 	}
 
+	func silentReload() async {
+		switch await Self.reload(cache: .reloadIgnoringLocalCacheData) {
+		case let .success(data):
+			withAnimation {
+				response = data
+				error = nil
+			}
+		case .failure:
+			break
+		}
+	}
+
 	static func reload(cache: NSURLRequest.CachePolicy) async -> Result<[Entry], Error> {
 		do {
 			let (response, _) = try await URLSession.shared.data(for: URLRequest(url: getURL, cachePolicy: cache))
@@ -99,6 +111,8 @@ struct SharedCredentials: View {
 		.task {
 			guard response.isEmpty else { return }
 			await reload(cache: .returnCacheDataElseLoad)
+			guard URLCache.shared.isStale(for: Self.getURL) else { return }
+			await silentReload()
 		}
 		.navigationTitle(Text("Shared Credentials"))
 		#if os(iOS)

@@ -13,6 +13,8 @@
 		1717C4A02ABA44EC00AD991A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C49F2ABA44EC00AD991A /* ContentView.swift */; };
 		1717C4A22ABA44ED00AD991A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1717C4A12ABA44ED00AD991A /* Assets.xcassets */; };
 		1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */; };
+		17206BDF2FF07BCD00341D46 /* DataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17206BDE2FF07BCD00341D46 /* DataRefresher.swift */; };
+		17206BE02FF07BCD00341D46 /* DataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17206BDE2FF07BCD00341D46 /* DataRefresher.swift */; };
 		173245232AC4CE99005C3AC2 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245222AC4CE99005C3AC2 /* Rule.swift */; };
 		173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */; };
 		174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
@@ -85,6 +87,7 @@
 		1717C49F2ABA44EC00AD991A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1717C4A12ABA44ED00AD991A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordURLs.swift; sourceTree = "<group>"; };
+		17206BDE2FF07BCD00341D46 /* DataRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRefresher.swift; sourceTree = "<group>"; };
 		173245222AC4CE99005C3AC2 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleChips.swift; sourceTree = "<group>"; };
 		174820E12AD33DD8006AF2AC /* HomeBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBackground.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		1717C4912ABA44EC00AD991A = {
 			isa = PBXGroup;
 			children = (
+				17206BDE2FF07BCD00341D46 /* DataRefresher.swift */,
 				1717C49D2ABA44EC00AD991A /* PIApp.swift */,
 				1717C49F2ABA44EC00AD991A /* ContentView.swift */,
 				177688602AD9D65A00F68E88 /* Home */,
@@ -198,6 +202,14 @@
 				17A3A7652ADC8A3E00CF82FD /* Tests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		CC01000000000000000000C1 /* AppIDs */ = {
+			isa = PBXGroup;
+			children = (
+				CC01000000000000000000B1 /* AppIDCredentials.swift */,
+			);
+			path = AppIDs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +355,7 @@
 				17CFADD32ADC4C2400BDEFBD /* Appended2FA.swift in Sources */,
 				17CFADD42ADC4C2400BDEFBD /* PasswordRuleChips.swift in Sources */,
 				17CFADCF2ADC4C2400BDEFBD /* ChangePasswordURLs.swift in Sources */,
+				17206BDF2FF07BCD00341D46 /* DataRefresher.swift in Sources */,
 				17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */,
 				17CFADD02ADC4C2400BDEFBD /* Favicon.swift in Sources */,
 				17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */,
@@ -365,6 +378,7 @@
 				17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */,
 				173245232AC4CE99005C3AC2 /* Rule.swift in Sources */,
 				1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */,
+				17206BE02FF07BCD00341D46 /* DataRefresher.swift in Sources */,
 				17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */,
 				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
 				17CFADD62ADC754600BDEFBD /* RefreshButton.swift in Sources */,
@@ -591,6 +605,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Passwords;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -634,6 +649,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Passwords;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
