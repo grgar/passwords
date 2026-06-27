@@ -72,7 +72,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "171459ED2ADB3FCF00E6C111"
             BuildableName = "Passwords Inspector.app"
-            BlueprintName = "Watch App"
             ReferencedContainer = "container:Passwords Inspector.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -89,7 +88,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "171459ED2ADB3FCF00E6C111"
             BuildableName = "Passwords Inspector.app"
-            BlueprintName = "Watch App"
             ReferencedContainer = "container:Passwords Inspector.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
