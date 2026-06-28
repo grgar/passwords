@@ -85,6 +85,7 @@
 		17B67CC42FF16058008098CA /* Rule */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (17B67CE02FF1605B008098CA /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Rule; sourceTree = "<group>"; };
 		17B67CD72FF1605B008098CA /* Domains */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Domains; sourceTree = "<group>"; };
 		17B67CE22FF1605D008098CA /* AppIDs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppIDs; sourceTree = "<group>"; };
+		17B67CE32FF16060008098CA /* Browsers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Browsers; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +123,7 @@
 				17B67CC42FF16058008098CA /* Rule */,
 				17B67CD72FF1605B008098CA /* Domains */,
 				17B67CE22FF1605D008098CA /* AppIDs */,
+				17B67CE32FF16060008098CA /* Browsers */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
 				17A5E5FD2E7378960040F28F /* AppIcon.icon */,
@@ -170,6 +172,7 @@
 				17B67CC42FF16058008098CA /* Rule */,
 				17B67CD72FF1605B008098CA /* Domains */,
 				17B67CE22FF1605D008098CA /* AppIDs */,
+				17B67CE32FF16060008098CA /* Browsers */,
 			);
 			name = "Watch App";
 			productName = "Passwords Inspector (Watch) Watch App";
@@ -195,6 +198,7 @@
 				17B67CC42FF16058008098CA /* Rule */,
 				17B67CD72FF1605B008098CA /* Domains */,
 				17B67CE22FF1605D008098CA /* AppIDs */,
+				17B67CE32FF16060008098CA /* Browsers */,
 			);
 			name = "Passwords Inspector";
 			productName = "Passwords Inspector";

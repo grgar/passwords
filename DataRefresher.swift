@@ -32,6 +32,7 @@ enum DataRefresher {
 			group.addTask { _ = await Appended2FA.reload(cache: .reloadIgnoringLocalCacheData) }
 			group.addTask { _ = await EmbeddedThirdParty.reload(cache: .reloadIgnoringLocalCacheData) }
 			group.addTask { _ = await AppIDCredentials.reload(cache: .reloadIgnoringLocalCacheData) }
+			group.addTask { _ = await BrowserCatalogue.reload(cache: .reloadIgnoringLocalCacheData) }
 		}
 	}
 
