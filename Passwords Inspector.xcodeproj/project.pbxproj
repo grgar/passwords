@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,45 +12,16 @@
 		1717C49E2ABA44EC00AD991A /* PIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C49D2ABA44EC00AD991A /* PIApp.swift */; };
 		1717C4A02ABA44EC00AD991A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C49F2ABA44EC00AD991A /* ContentView.swift */; };
 		1717C4A22ABA44ED00AD991A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1717C4A12ABA44ED00AD991A /* Assets.xcassets */; };
-		1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */; };
 		17206BDF2FF07BCD00341D46 /* DataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17206BDE2FF07BCD00341D46 /* DataRefresher.swift */; };
 		17206BE02FF07BCD00341D46 /* DataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17206BDE2FF07BCD00341D46 /* DataRefresher.swift */; };
-		173245232AC4CE99005C3AC2 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245222AC4CE99005C3AC2 /* Rule.swift */; };
-		173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */; };
-		174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
 		174840992AD49A3E00EB9592 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 174840982AD49A3E00EB9592 /* Settings.bundle */; };
-		17618B7C2AC200C600B31C28 /* PasswordRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17618B7B2AC200C600B31C28 /* PasswordRules.swift */; };
-		1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1776885E2AD9D65400F68E88 /* HomeSidebar.swift */; };
-		17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */; };
 		17A3A7662ADC8A3E00CF82FD /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A3A7652ADC8A3E00CF82FD /* Tests.swift */; };
 		17A5E5FE2E7378960040F28F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 17A5E5FD2E7378960040F28F /* AppIcon.icon */; };
 		17A5E5FF2E7378960040F28F /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 17A5E5FD2E7378960040F28F /* AppIcon.icon */; };
-		17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
 		17BFF7022ABF217D004047AD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
-		17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
-		17C2FD012EFCA18700CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
-		17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C2FD002EFCA18700CF385C /* NavigationCategory.swift */; };
-		17CFADC92ADC4C2400BDEFBD /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174820E12AD33DD8006AF2AC /* HomeBackground.swift */; };
-		17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245222AC4CE99005C3AC2 /* Rule.swift */; };
-		17CFADCB2ADC4C2400BDEFBD /* PasswordRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17618B7B2AC200C600B31C28 /* PasswordRules.swift */; };
 		17CFADCC2ADC4C2400BDEFBD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C49F2ABA44EC00AD991A /* ContentView.swift */; };
 		17CFADCD2ADC4C2400BDEFBD /* PIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C49D2ABA44EC00AD991A /* PIApp.swift */; };
-		17CFADCE2ADC4C2400BDEFBD /* HomeSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1776885E2AD9D65400F68E88 /* HomeSidebar.swift */; };
-		17CFADCF2ADC4C2400BDEFBD /* ChangePasswordURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */; };
 		17CFADD02ADC4C2400BDEFBD /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7012ABF217D004047AD /* Favicon.swift */; };
-		17CFADD12ADC4C2400BDEFBD /* PasswordRuleDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */; };
-		17CFADD22ADC4C2400BDEFBD /* SharedCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */; };
-		17CFADD32ADC4C2400BDEFBD /* Appended2FA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BFF7032ABF7D50004047AD /* Appended2FA.swift */; };
-		17CFADD42ADC4C2400BDEFBD /* PasswordRuleChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */; };
-		17CFADD62ADC754600BDEFBD /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD52ADC754600BDEFBD /* RefreshButton.swift */; };
-		17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD52ADC754600BDEFBD /* RefreshButton.swift */; };
-		17CFADD92ADC756800BDEFBD /* RulesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD82ADC756800BDEFBD /* RulesList.swift */; };
-		17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADD82ADC756800BDEFBD /* RulesList.swift */; };
-		17CFADDC2ADC758000BDEFBD /* RulesTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CFADDB2ADC758000BDEFBD /* RulesTable.swift */; };
-		CC01000000000000000000A2 /* EmbeddedThirdParty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000A1 /* EmbeddedThirdParty.swift */; };
-		CC01000000000000000000A3 /* EmbeddedThirdParty.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000A1 /* EmbeddedThirdParty.swift */; };
-		CC01000000000000000000B2 /* AppIDCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000B1 /* AppIDCredentials.swift */; };
-		CC01000000000000000000B3 /* AppIDCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC01000000000000000000B1 /* AppIDCredentials.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,29 +61,31 @@
 		1717C49D2ABA44EC00AD991A /* PIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIApp.swift; sourceTree = "<group>"; };
 		1717C49F2ABA44EC00AD991A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1717C4A12ABA44ED00AD991A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordURLs.swift; sourceTree = "<group>"; };
 		17206BDE2FF07BCD00341D46 /* DataRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRefresher.swift; sourceTree = "<group>"; };
-		173245222AC4CE99005C3AC2 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
-		173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleChips.swift; sourceTree = "<group>"; };
-		174820E12AD33DD8006AF2AC /* HomeBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBackground.swift; sourceTree = "<group>"; };
 		174840982AD49A3E00EB9592 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1748409A2AD4A73C00EB9592 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17618B7B2AC200C600B31C28 /* PasswordRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRules.swift; sourceTree = "<group>"; };
-		1776885E2AD9D65400F68E88 /* HomeSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSidebar.swift; sourceTree = "<group>"; };
-		17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRuleDetail.swift; sourceTree = "<group>"; };
 		17A3A7632ADC8A3E00CF82FD /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17A3A7652ADC8A3E00CF82FD /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		17A5E5FD2E7378960040F28F /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
-		17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCredentials.swift; sourceTree = "<group>"; };
 		17BFF7012ABF217D004047AD /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
-		17BFF7032ABF7D50004047AD /* Appended2FA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appended2FA.swift; sourceTree = "<group>"; };
-		17C2FD002EFCA18700CF385C /* NavigationCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCategory.swift; sourceTree = "<group>"; };
-		17CFADD52ADC754600BDEFBD /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
-		17CFADD82ADC756800BDEFBD /* RulesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesList.swift; sourceTree = "<group>"; };
-		17CFADDB2ADC758000BDEFBD /* RulesTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesTable.swift; sourceTree = "<group>"; };
-		CC01000000000000000000A1 /* EmbeddedThirdParty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedThirdParty.swift; sourceTree = "<group>"; };
-		CC01000000000000000000B1 /* AppIDCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDCredentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		17B67CE02FF1605B008098CA /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RulesTable.swift,
+			);
+			target = 171459ED2ADB3FCF00E6C111 /* Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		17B67CB62FF16056008098CA /* Home */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Home; sourceTree = "<group>"; };
+		17B67CC42FF16058008098CA /* Rule */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (17B67CE02FF1605B008098CA /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Rule; sourceTree = "<group>"; };
+		17B67CD72FF1605B008098CA /* Domains */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Domains; sourceTree = "<group>"; };
+		17B67CE22FF1605D008098CA /* AppIDs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppIDs; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		171459EB2ADB3FCF00E6C111 /* Frameworks */ = {
@@ -145,10 +118,10 @@
 				17206BDE2FF07BCD00341D46 /* DataRefresher.swift */,
 				1717C49D2ABA44EC00AD991A /* PIApp.swift */,
 				1717C49F2ABA44EC00AD991A /* ContentView.swift */,
-				177688602AD9D65A00F68E88 /* Home */,
-				17882AC22AC848380037E3A6 /* Rule */,
-				17882AC32AC8483E0037E3A6 /* Domains */,
-				CC01000000000000000000C1 /* AppIDs */,
+				17B67CB62FF16056008098CA /* Home */,
+				17B67CC42FF16058008098CA /* Rule */,
+				17B67CD72FF1605B008098CA /* Domains */,
+				17B67CE22FF1605D008098CA /* AppIDs */,
 				17BFF7012ABF217D004047AD /* Favicon.swift */,
 				1717C4A12ABA44ED00AD991A /* Assets.xcassets */,
 				17A5E5FD2E7378960040F28F /* AppIcon.icon */,
@@ -169,63 +142,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		177688602AD9D65A00F68E88 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				1776885E2AD9D65400F68E88 /* HomeSidebar.swift */,
-				174820E12AD33DD8006AF2AC /* HomeBackground.swift */,
-				17C2FD002EFCA18700CF385C /* NavigationCategory.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		17882AC22AC848380037E3A6 /* Rule */ = {
-			isa = PBXGroup;
-			children = (
-				173245222AC4CE99005C3AC2 /* Rule.swift */,
-				17618B7B2AC200C600B31C28 /* PasswordRules.swift */,
-				17CFADD52ADC754600BDEFBD /* RefreshButton.swift */,
-				17CFADD82ADC756800BDEFBD /* RulesList.swift */,
-				17CFADDB2ADC758000BDEFBD /* RulesTable.swift */,
-				173245242AC4D29D005C3AC2 /* PasswordRuleChips.swift */,
-				17882AC42AC84AAD0037E3A6 /* PasswordRuleDetail.swift */,
-			);
-			path = Rule;
-			sourceTree = "<group>";
-		};
-		17882AC32AC8483E0037E3A6 /* Domains */ = {
-			isa = PBXGroup;
-			children = (
-				1717C4AC2ABA473F00AD991A /* ChangePasswordURLs.swift */,
-				17BFF6FF2ABCDDC2004047AD /* SharedCredentials.swift */,
-				17BFF7032ABF7D50004047AD /* Appended2FA.swift */,
-				CC01000000000000000000A1 /* EmbeddedThirdParty.swift */,
-			);
-			path = Domains;
-			sourceTree = "<group>";
-		};
-		CC01000000000000000000C1 /* AppIDs */ = {
-			isa = PBXGroup;
-			children = (
-				CC01000000000000000000B1 /* AppIDCredentials.swift */,
-			);
-			path = AppIDs;
-			sourceTree = "<group>";
-		};
 		17A3A7642ADC8A3E00CF82FD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				17A3A7652ADC8A3E00CF82FD /* Tests.swift */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		CC01000000000000000000C1 /* AppIDs */ = {
-			isa = PBXGroup;
-			children = (
-				CC01000000000000000000B1 /* AppIDCredentials.swift */,
-			);
-			path = AppIDs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +164,12 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				17B67CB62FF16056008098CA /* Home */,
+				17B67CC42FF16058008098CA /* Rule */,
+				17B67CD72FF1605B008098CA /* Domains */,
+				17B67CE22FF1605D008098CA /* AppIDs */,
 			);
 			name = "Watch App";
 			productName = "Passwords Inspector (Watch) Watch App";
@@ -261,6 +189,12 @@
 			);
 			dependencies = (
 				171459FA2ADB3FD000E6C111 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				17B67CB62FF16056008098CA /* Home */,
+				17B67CC42FF16058008098CA /* Rule */,
+				17B67CD72FF1605B008098CA /* Domains */,
+				17B67CE22FF1605D008098CA /* AppIDs */,
 			);
 			name = "Passwords Inspector";
 			productName = "Passwords Inspector";
@@ -362,23 +296,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				17CFADCD2ADC4C2400BDEFBD /* PIApp.swift in Sources */,
-				17CFADCE2ADC4C2400BDEFBD /* HomeSidebar.swift in Sources */,
-				17CFADC92ADC4C2400BDEFBD /* HomeBackground.swift in Sources */,
-				17CFADCB2ADC4C2400BDEFBD /* PasswordRules.swift in Sources */,
-				17CFADD12ADC4C2400BDEFBD /* PasswordRuleDetail.swift in Sources */,
-				17CFADD22ADC4C2400BDEFBD /* SharedCredentials.swift in Sources */,
 				17CFADCC2ADC4C2400BDEFBD /* ContentView.swift in Sources */,
-				17CFADD32ADC4C2400BDEFBD /* Appended2FA.swift in Sources */,
-				17CFADD42ADC4C2400BDEFBD /* PasswordRuleChips.swift in Sources */,
-				17CFADCF2ADC4C2400BDEFBD /* ChangePasswordURLs.swift in Sources */,
 				17206BDF2FF07BCD00341D46 /* DataRefresher.swift in Sources */,
-				17CFADD72ADC754600BDEFBD /* RefreshButton.swift in Sources */,
 				17CFADD02ADC4C2400BDEFBD /* Favicon.swift in Sources */,
-				17CFADCA2ADC4C2400BDEFBD /* Rule.swift in Sources */,
-				17C2FD032EFCAA3F00CF385C /* NavigationCategory.swift in Sources */,
-				17CFADDA2ADC756800BDEFBD /* RulesList.swift in Sources */,
-				CC01000000000000000000A3 /* EmbeddedThirdParty.swift in Sources */,
-				CC01000000000000000000B3 /* AppIDCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,25 +306,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17618B7C2AC200C600B31C28 /* PasswordRules.swift in Sources */,
-				17C2FD012EFCA18700CF385C /* NavigationCategory.swift in Sources */,
 				1717C4A02ABA44EC00AD991A /* ContentView.swift in Sources */,
-				1717C4AD2ABA473F00AD991A /* ChangePasswordURLs.swift in Sources */,
-				17CFADDC2ADC758000BDEFBD /* RulesTable.swift in Sources */,
 				1717C49E2ABA44EC00AD991A /* PIApp.swift in Sources */,
-				17BFF7002ABCDDC2004047AD /* SharedCredentials.swift in Sources */,
-				17882AC52AC84AAD0037E3A6 /* PasswordRuleDetail.swift in Sources */,
-				173245232AC4CE99005C3AC2 /* Rule.swift in Sources */,
-				1776885F2AD9D65400F68E88 /* HomeSidebar.swift in Sources */,
 				17206BE02FF07BCD00341D46 /* DataRefresher.swift in Sources */,
-				17BFF7042ABF7D50004047AD /* Appended2FA.swift in Sources */,
 				17BFF7022ABF217D004047AD /* Favicon.swift in Sources */,
-				17CFADD62ADC754600BDEFBD /* RefreshButton.swift in Sources */,
-				173245252AC4D29D005C3AC2 /* PasswordRuleChips.swift in Sources */,
-				174820E22AD33DD8006AF2AC /* HomeBackground.swift in Sources */,
-				17CFADD92ADC756800BDEFBD /* RulesList.swift in Sources */,
-				CC01000000000000000000A2 /* EmbeddedThirdParty.swift in Sources */,
-				CC01000000000000000000B2 /* AppIDCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,7 +446,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -600,7 +505,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
