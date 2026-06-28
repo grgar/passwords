@@ -127,18 +127,24 @@ struct SharedCredentials: View {
 				Section {
 					ForEach(historicalResponses.filter { $0.shared != nil }, id: \.hashValue) { response in
 						if let shared = response.shared {
-							VStack(alignment: .leading) {
-								ForEach(shared, id: \.self) { shared in
-									Text(shared)
+							LabeledContent {
+								VStack(alignment: .trailing) {
+									ForEach(shared, id: \.self) { shared in
+										Text(shared)
+											.strikethrough()
+									}
 								}
+								.multilineTextAlignment(.trailing)
+							} label: {
+								Text("")
+									.hidden()
 							}
-							.multilineTextAlignment(.leading)
 						}
 					}
 				} header: {
 					Text("Historical")
 				} footer: {
-					Text("Formerly affiliated domains. Useful for suppressing password reuse warnings across domains that were once associated.")
+					Text("Formerly affiliated domains where password reuse warnings are suppressed but credentials are not shared.")
 				}
 			}
 		}
