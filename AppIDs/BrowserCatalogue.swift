@@ -44,6 +44,11 @@ struct BrowserCatalogue: View {
 		var id: Int { identifier }
 	}
 
+	struct Platform: Identifiable, Hashable {
+		var name: String
+		var id: String { name }
+	}
+
 	struct Response: Decodable {
 		let extensionStorefronts: [ExtensionStorefront]
 		let webBrowsers: [WebBrowser]
@@ -59,6 +64,7 @@ struct BrowserCatalogue: View {
 	@State var error: Error?
 
 	@State var searchText = ""
+	@State var searchTokens: [Platform] = []
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/web-browser-extension-distribution-information.json")!
 
@@ -96,11 +102,20 @@ struct BrowserCatalogue: View {
 		}
 	}
 
+	var suggestedPlatformTokens: [Platform] {
+		let selectedNames = Set(searchTokens.map(\.name))
+		return Array(Set(browsers.flatMap(\.supportedPlatforms)))
+			.filter { !selectedNames.contains($0) }
+			.sorted()
+			.map { Platform(name: $0) }
+	}
+
 	var filteredBrowsers: [WebBrowser] {
-		browsers.filter {
-			searchText.isEmpty ||
-			$0.longName.localizedCaseInsensitiveContains(searchText) ||
-			$0.shortName.localizedCaseInsensitiveContains(searchText)
+		browsers.filter { browser in
+			(searchText.isEmpty ||
+			browser.longName.localizedCaseInsensitiveContains(searchText) ||
+			browser.shortName.localizedCaseInsensitiveContains(searchText)) &&
+			(searchTokens.isEmpty || searchTokens.allSatisfy { browser.supportedPlatforms.contains($0.name) })
 		}
 	}
 
@@ -143,7 +158,7 @@ struct BrowserCatalogue: View {
 
 			Section {
 				ForEach(filteredBrowsers) { browser in
-					VStack(alignment: .leading, spacing: 2) {
+					VStack(alignment: .leading, spacing: 4) {
 						Text(browser.longName)
 						if let macInfo = browser.platformSpecificInformation["Mac"],
 						   let bundleID = macInfo.bundleIdentifier {
@@ -155,7 +170,7 @@ struct BrowserCatalogue: View {
 							ForEach(browser.supportedPlatforms, id: \.self) { platform in
 								Text(platform)
 									.font(.caption2)
-									.padding(.horizontal, 5)
+									.padding(.horizontal, 7)
 									.padding(.vertical, 2)
 									.background(.secondary.opacity(0.15), in: Capsule())
 							}
@@ -170,7 +185,13 @@ struct BrowserCatalogue: View {
 				Text("Web browsers with bundle IDs, code-signing information, platform support, and extension store links.")
 			}
 		}
+		#if os(watchOS)
 		.searchable(text: $searchText, prompt: Text("Search Browsers"))
+		#else
+		.searchable(text: $searchText, tokens: $searchTokens, suggestedTokens: .constant(suggestedPlatformTokens), prompt: Text("Search Browsers")) { token in
+				Text(token.name)
+			}
+		#endif
 		.refreshable {
 			await reload()
 		}
