@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AppIDCredentials: View {
 	struct AppEntry: Identifiable {
+		/// Team ID and bundle ID.
 		let id: String
 		let domains: [String]
 	}
@@ -56,15 +57,7 @@ struct AppIDCredentials: View {
 
 		List {
 			ForEach(responses) { entry in
-				VStack(alignment: .leading, spacing: 2) {
-					Text(entry.id)
-					ForEach(entry.domains, id: \.self) { domain in
-						Text(domain)
-							.foregroundStyle(.secondary)
-							.font(.caption)
-					}
-				}
-				.multilineTextAlignment(.leading)
+				AppEntryRow(entry: entry)
 			}
 		}
 		.searchable(text: $searchText, prompt: Text("Search App IDs or Domains"))
