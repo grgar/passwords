@@ -44,9 +44,23 @@ struct BrowserCatalogue: View {
 		var id: Int { identifier }
 	}
 
-	struct Platform: Identifiable, Hashable {
-		var name: String
-		var id: String { name }
+	enum SearchToken: Identifiable, Hashable {
+		case platform(String)
+		case storefront(name: String, identifier: Int)
+
+		var id: String {
+			switch self {
+			case .platform(let name): "platform:\(name)"
+			case .storefront(_, let identifier): "storefront:\(identifier)"
+			}
+		}
+
+		var label: String {
+			switch self {
+			case .platform(let name): name
+			case .storefront(let name, _): name
+			}
+		}
 	}
 
 	struct Response: Decodable {
@@ -64,7 +78,7 @@ struct BrowserCatalogue: View {
 	@State var error: Error?
 
 	@State var searchText = ""
-	@State var searchTokens: [Platform] = []
+	@State var searchTokens: [SearchToken] = []
 
 	static let getURL = URL(string: "https://raw.githubusercontent.com/apple/password-manager-resources/main/quirks/web-browser-extension-distribution-information.json")!
 
@@ -102,12 +116,17 @@ struct BrowserCatalogue: View {
 		}
 	}
 
-	var suggestedPlatformTokens: [Platform] {
-		let selectedNames = Set(searchTokens.map(\.name))
-		return Array(Set(browsers.flatMap(\.supportedPlatforms)))
-			.filter { !selectedNames.contains($0) }
+	var suggestedSearchTokens: [SearchToken] {
+		let selectedPlatforms = Set(searchTokens.compactMap { if case .platform(let name) = $0 { name } else { nil } })
+		let selectedStorefronts = Set(searchTokens.compactMap { if case .storefront(_, let id) = $0 { id } else { nil } })
+		let platformTokens = Array(Set(browsers.flatMap(\.supportedPlatforms)))
+			.filter { !selectedPlatforms.contains($0) }
 			.sorted()
-			.map { Platform(name: $0) }
+			.map { SearchToken.platform($0) }
+		let storefrontTokens = storefronts
+			.filter { !selectedStorefronts.contains($0.identifier) }
+			.map { SearchToken.storefront(name: $0.name, identifier: $0.identifier) }
+		return platformTokens + storefrontTokens
 	}
 
 	var filteredBrowsers: [WebBrowser] {
@@ -115,7 +134,12 @@ struct BrowserCatalogue: View {
 			(searchText.isEmpty ||
 			browser.longName.localizedCaseInsensitiveContains(searchText) ||
 			browser.shortName.localizedCaseInsensitiveContains(searchText)) &&
-			(searchTokens.isEmpty || searchTokens.allSatisfy { browser.supportedPlatforms.contains($0.name) })
+			searchTokens.allSatisfy { token in
+				switch token {
+				case .platform(let name): browser.supportedPlatforms.contains(name)
+				case .storefront(_, let id): browser.supportedStoreIdentifiers.contains(id)
+				}
+			}
 		}
 	}
 
@@ -123,7 +147,7 @@ struct BrowserCatalogue: View {
 
 	var body: some View {
 		List {
-			if !storefronts.isEmpty {
+			if !storefronts.isEmpty, searchText.isEmpty, searchTokens.isEmpty {
 				Section {
 					ForEach(storefronts) { storefront in
 						Link(destination: storefront.url) {
@@ -136,7 +160,7 @@ struct BrowserCatalogue: View {
 								} label: {
 									Text(storefront.name)
 									if let host = storefront.url.host(percentEncoded: false) {
-										Text(host + storefront.url.path(percentEncoded: false))
+										Text(host)
 											.foregroundStyle(.secondary)
 									}
 								}
@@ -146,13 +170,14 @@ struct BrowserCatalogue: View {
 								}
 							}
 						}
+						.foregroundStyle(.foreground)
 					}
 				} header: {
 					Text("Extension Storefronts")
 						.textCase(nil)
 						.font(.caption)
 				} footer: {
-					Text("Stores from which password manager browser extensions can be distributed.")
+					Text("iCloud Keychain is available from these browser extension stores.")
 				}
 			}
 
@@ -182,14 +207,14 @@ struct BrowserCatalogue: View {
 			} header: {
 				Text("Web Browsers")
 			} footer: {
-				Text("Web browsers with bundle IDs, code-signing information, platform support, and extension store links.")
+				Text("iCloud Keychain is allowed to communicate and share your passwords with these web browsers.")
 			}
 		}
 		#if os(watchOS)
 		.searchable(text: $searchText, prompt: Text("Search Browsers"))
 		#else
-		.searchable(text: $searchText, tokens: $searchTokens, suggestedTokens: .constant(suggestedPlatformTokens), prompt: Text("Search Browsers")) { token in
-				Text(token.name)
+		.searchable(text: $searchText, tokens: $searchTokens, suggestedTokens: .constant(suggestedSearchTokens), prompt: Text("Search Browsers")) { token in
+				Text(token.label)
 			}
 		#endif
 		.refreshable {
