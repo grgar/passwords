@@ -104,13 +104,32 @@ struct BrowserCatalogue: View {
 		}
 	}
 
+	@State private var showFavicon = true
+
 	var body: some View {
 		List {
 			if !storefronts.isEmpty {
 				Section {
 					ForEach(storefronts) { storefront in
 						Link(destination: storefront.url) {
-							Label(storefront.name, systemImage: "storefront")
+							Label {
+								LabeledContent {
+									Image(systemName: "arrow.up.forward.square")
+										.foregroundStyle(.blue)
+										.symbolRenderingMode(.hierarchical)
+										.accessibilityHidden(true)
+								} label: {
+									Text(storefront.name)
+									if let host = storefront.url.host(percentEncoded: false) {
+										Text(host + storefront.url.path(percentEncoded: false))
+											.foregroundStyle(.secondary)
+									}
+								}
+							} icon: {
+								if showFavicon, let host = storefront.url.host() {
+									Favicon(domain: host)
+								}
+							}
 						}
 					}
 				} header: {
@@ -161,10 +180,10 @@ struct BrowserCatalogue: View {
 			guard URLCache.shared.isStale(for: Self.getURL) else { return }
 			await silentReload()
 		}
-		.listStyle(.plain)
 		.navigationTitle(Text("Browser Catalogue"))
 		#if os(iOS)
-			.navigationBarTitleDisplayMode(.large)
+		.listStyle(.inset)
+		.navigationBarTitleDisplayMode(.large)
 		#endif
 	}
 }
