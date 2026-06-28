@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum NavigationCategory: String, View, CaseIterable {
-	case rules, shared, change, appended, embeddedThirdParty, appIDs
+	case rules, shared, change, appended, embeddedThirdParty, appIDs, browsers
 
 	var body: some View {
 		switch self {
@@ -17,6 +17,8 @@ enum NavigationCategory: String, View, CaseIterable {
 			EmbeddedThirdParty()
 		case .appIDs:
 			AppIDCredentials()
+		case .browsers:
+			BrowserCatalogue()
 		}
 	}
 
@@ -55,6 +57,8 @@ enum NavigationCategory: String, View, CaseIterable {
 			"Embedded Third-Party"
 		case .appIDs:
 			"App ID Credentials"
+		case .browsers:
+			"Browser Catalogue"
 		}
 	}
 
@@ -72,6 +76,8 @@ enum NavigationCategory: String, View, CaseIterable {
 			"Domains that, when embedded as a third party, ask for credentials belonging to a different service."
 		case .appIDs:
 			"Native apps and the websites they share credentials with, used for AutoFill suggestions on iOS 17.4 and later."
+		case .browsers:
+			"Web browsers with bundle IDs, code-signing information, platform support, and extension store links."
 		}
 	}
 
@@ -89,6 +95,8 @@ enum NavigationCategory: String, View, CaseIterable {
 			"puzzlepiece.extension"
 		case .appIDs:
 			"apps.iphone"
+		case .browsers:
+			"globe"
 		}
 	}
 }
