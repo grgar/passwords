@@ -28,7 +28,10 @@ enum DataRefresher {
 			group.addTask { _ = await PasswordRules.reload(cache: .reloadIgnoringLocalCacheData) }
 			group.addTask { _ = await ChangePasswordURLs.reload(cache: .reloadIgnoringLocalCacheData) }
 			group.addTask { _ = await SharedCredentials.reload(cache: .reloadIgnoringLocalCacheData) }
+			group.addTask { _ = await SharedCredentials.reloadFrom(SharedCredentials.historicalURL, cache: .reloadIgnoringLocalCacheData) }
 			group.addTask { _ = await Appended2FA.reload(cache: .reloadIgnoringLocalCacheData) }
+			group.addTask { _ = await EmbeddedThirdParty.reload(cache: .reloadIgnoringLocalCacheData) }
+			group.addTask { _ = await AppIDCredentials.reload(cache: .reloadIgnoringLocalCacheData) }
 		}
 	}
 

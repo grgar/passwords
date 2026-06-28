@@ -33,7 +33,9 @@ struct SharedCredentials: View {
 	}
 
 	func silentReload() async {
-		switch await Self.reload(cache: .reloadIgnoringLocalCacheData) {
+		async let mainResult = Self.reload(cache: .reloadIgnoringLocalCacheData)
+		async let historicalResult = Self.reloadFrom(Self.historicalURL, cache: .reloadIgnoringLocalCacheData)
+		switch await mainResult {
 		case let .success(data):
 			withAnimation {
 				response = data
@@ -41,6 +43,9 @@ struct SharedCredentials: View {
 			}
 		case .failure:
 			break
+		}
+		if case let .success(data) = await historicalResult {
+			withAnimation { historicalResponse = data }
 		}
 	}
 
