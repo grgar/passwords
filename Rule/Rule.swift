@@ -1,5 +1,4 @@
 import Foundation
-import RegexBuilder
 
 struct Rule: Identifiable, Hashable {
 	let id: String
@@ -28,9 +27,25 @@ struct Rule: Identifiable, Hashable {
 			case "unicode":
 				self = .unicode
 			default:
-				self = .other(description.dropFirst().dropLast().reduce(into: Set<Character>()) { partialResult, character in
-					partialResult.insert(character)
-				})
+				guard description.hasPrefix("[") && description.hasSuffix("]") else { return nil }
+				var chars = Set<Character>()
+				var i = description.index(after: description.startIndex)
+				let end = description.index(before: description.endIndex)
+				while i < end {
+					if description[i] == "\\" {
+						let next = description.index(after: i)
+						if next < end {
+							chars.insert(description[next])
+							i = description.index(after: next)
+						} else {
+							i = next
+						}
+					} else {
+						chars.insert(description[i])
+						i = description.index(after: i)
+					}
+				}
+				self = .other(chars)
 			}
 		}
 
@@ -87,33 +102,73 @@ struct Rule: Identifiable, Hashable {
 extension Rule {
 	init(domain: String, rule originalRule: String) {
 		self = Self(id: domain, originalRule: originalRule)
-		// TODO: Fix regex if character set contains one bracket without the other
-		for split in originalRule.split(separator: /; ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/, omittingEmptySubsequences: true) {
-			let split = String(split).split(separator: /: ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/, maxSplits: 1)
-			if split.count != 2 { continue }
-			switch split[0] {
+		for property in Self.splitOutsideClass(originalRule, on: ";") {
+			guard let colonIdx = property.firstIndex(of: ":") else { continue }
+			let key = property[..<colonIdx].trimmingCharacters(in: .whitespaces)
+			let value = String(property[property.index(after: colonIdx)...]).trimmingCharacters(in: .whitespaces)
+			switch key {
 			case "minlength":
-				self.minLength = Int(split[1].trimmingCharacters(in: .punctuationCharacters))
+				self.minLength = Int(value)
 			case "maxlength":
-				self.maxLength = Int(split[1].trimmingCharacters(in: .punctuationCharacters))
+				self.maxLength = Int(value)
 			case "required":
-				for set in String(split[1]).split(separator: /, ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/) {
-					if let set = PasswordCharacter(String(set)) {
-						self.required.insert(set)
-					}
+				for token in Self.splitOutsideClass(value, on: ",") {
+					if let char = PasswordCharacter(token) { self.required.insert(char) }
 				}
 			case "allowed":
-				for set in String(split[1]).split(separator: /, ?(?=(?:[^\[\]]*[\[\]][^\[\]]*[\[\]])*[^\[\]]*$)/) {
-					if let set = PasswordCharacter(String(set)) {
-						self.allowed.insert(set)
-					}
+				for token in Self.splitOutsideClass(value, on: ",") {
+					if let char = PasswordCharacter(token) { self.allowed.insert(char) }
 				}
 			default:
-				print("did not parse \(split[0])")
+				print("did not parse \(key)")
 			}
 		}
 		// if it's required, it's always allowed
 		self.allowed.subtract(self.required)
+	}
+
+	// Split s on delimiter characters that appear outside [...] character classes.
+	// Inside [...], backslash escapes the next character (preventing it from closing the class).
+	private static func splitOutsideClass(_ s: String, on delimiter: Character) -> [String] {
+		var result: [String] = []
+		var current = ""
+		var inClass = false
+		var i = s.startIndex
+		while i < s.endIndex {
+			let c = s[i]
+			if inClass {
+				if c == "\\" {
+					current.append(c)
+					i = s.index(after: i)
+					if i < s.endIndex {
+						current.append(s[i])
+						i = s.index(after: i)
+					}
+				} else {
+					if c == "]" { inClass = false }
+					current.append(c)
+					i = s.index(after: i)
+				}
+			} else {
+				if c == "[" {
+					inClass = true
+					current.append(c)
+					i = s.index(after: i)
+				} else if c == delimiter {
+					let trimmed = current.trimmingCharacters(in: .whitespaces)
+					if !trimmed.isEmpty { result.append(trimmed) }
+					current = ""
+					i = s.index(after: i)
+					while i < s.endIndex && s[i] == " " { i = s.index(after: i) }
+				} else {
+					current.append(c)
+					i = s.index(after: i)
+				}
+			}
+		}
+		let trimmed = current.trimmingCharacters(in: .whitespaces)
+		if !trimmed.isEmpty { result.append(trimmed) }
+		return result
 	}
 }
 
