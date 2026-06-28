@@ -131,6 +131,7 @@ struct ChangePasswordURLs: View {
 			guard URLCache.shared.isStale(for: Self.getURL) else { return }
 			await silentReload()
 		}
+		.listStyle(.plain)
 		.navigationTitle(Text("Change Password"))
 		#if os(iOS)
 			.navigationBarTitleDisplayMode(.large)

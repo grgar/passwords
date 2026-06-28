@@ -145,7 +145,9 @@ struct BrowserCatalogue: View {
 					}
 					.multilineTextAlignment(.leading)
 				}
-			} header: {} footer: {
+			} header: {
+				Text("Web Browsers")
+			} footer: {
 				Text("Web browsers with bundle IDs, code-signing information, platform support, and extension store links.")
 			}
 		}
@@ -159,6 +161,7 @@ struct BrowserCatalogue: View {
 			guard URLCache.shared.isStale(for: Self.getURL) else { return }
 			await silentReload()
 		}
+		.listStyle(.plain)
 		.navigationTitle(Text("Browser Catalogue"))
 		#if os(iOS)
 			.navigationBarTitleDisplayMode(.large)

@@ -130,8 +130,11 @@ struct SharedCredentials: View {
 							LabeledContent {
 								VStack(alignment: .trailing) {
 									ForEach(shared, id: \.self) { shared in
-										Text(shared)
-											.strikethrough()
+										HStack {
+											Spacer()
+											Text(shared)
+												.strikethrough()
+										}
 									}
 								}
 								.multilineTextAlignment(.trailing)
@@ -160,6 +163,7 @@ struct SharedCredentials: View {
 		}
 		.navigationTitle(Text("Shared Credentials"))
 		#if os(iOS)
+		.listStyle(.inset)
 		.navigationBarTitleDisplayMode(.large)
 		#endif
 	}

@@ -40,18 +40,18 @@ struct EmbeddedThirdParty: View {
 		}
 	}
 
-	var body: some View {
-		let responses = response
+	var responses: [String] {
+		response
 			.filter { searchText == "" || $0.localizedCaseInsensitiveContains(searchText) }
+	}
 
+	var body: some View {
 		List {
 			Section {
-				Text("avoid incorrectly saving credentials that belong to a different service")
-				Text("prevent associating the embedded domain's credentials with the parent page's account")
-			} header: {
 				Text("This list of embedded services is used to")
-					.textCase(nil)
 					.font(.caption)
+				Label("avoid incorrectly saving credentials that belong to a different service", systemImage: "key.slash")
+				Label("prevent associating the embedded domain's credentials with the parent page's account", systemImage: "link.circle")
 			}
 			.font(.caption)
 
@@ -75,7 +75,8 @@ struct EmbeddedThirdParty: View {
 		}
 		.navigationTitle(Text("Embedded Third-Party"))
 		#if os(iOS)
-			.navigationBarTitleDisplayMode(.large)
+		.listStyle(.inset)
+		.navigationBarTitleDisplayMode(.large)
 		#endif
 	}
 }

@@ -48,12 +48,12 @@ struct Appended2FA: View {
 
 		List {
 			Section {
-				Text("prevent auto-submission of signin forms, allowing you to append the 2FA code without frustration")
-				Text("suppress prompting to update a saved password when the submitted password is prefixed by the already-stored password")
-			} header: {
 				Text("This list of websites is used to")
-					.textCase(nil)
-					.font(.caption)
+					#if os(iOS)
+					.listRowSeparator(.hidden, edges: .top)
+					#endif
+				Label("prevent auto-submission of signin forms, allowing you to append the 2FA code without frustration", systemImage: "hand.raised")
+				Label("suppress prompting to update a saved password when the submitted password is prefixed by the already-stored password", systemImage: "bell.slash")
 			}
 			.font(.caption)
 
@@ -77,7 +77,8 @@ struct Appended2FA: View {
 		}
 		.navigationTitle(Text("Appended 2FA"))
 		#if os(iOS)
-			.navigationBarTitleDisplayMode(.large)
+		.listStyle(.inset)
+		.navigationBarTitleDisplayMode(.large)
 		#endif
 	}
 }
