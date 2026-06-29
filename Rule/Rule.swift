@@ -127,8 +127,19 @@ extension Rule {
 		self.allowed.subtract(self.required)
 	}
 
-	// Split s on delimiter characters that appear outside [...] character classes.
-	// Inside [...], backslash escapes the next character (preventing it from closing the class).
+	/// Splits `s` on each `delimiter` character that appears outside a `[…]` character class.
+	///
+	/// The PasswordRules grammar uses this rule at two levels:
+	/// - Properties separated by `;` at the top level.
+	/// - Character-class tokens within a property value separated by `,`.
+	///
+	/// A custom character class `[chars]` may contain `;` or `,` literally, so
+	/// those characters must not be treated as delimiters while `inClass` is true.
+	/// Inside `[…]`, a backslash escapes the immediately following character —
+	/// `\]` includes `]` in the class without closing it.
+	///
+	/// Returned tokens are stripped of leading/trailing whitespace; empty tokens
+	/// are omitted.
 	private static func splitOutsideClass(_ s: String, on delimiter: Character) -> [String] {
 		var result: [String] = []
 		var current = ""
@@ -136,34 +147,26 @@ extension Rule {
 		var i = s.startIndex
 		while i < s.endIndex {
 			let c = s[i]
-			if inClass {
-				if c == "\\" {
-					current.append(c)
-					i = s.index(after: i)
-					if i < s.endIndex {
-						current.append(s[i])
-						i = s.index(after: i)
-					}
-				} else {
-					if c == "]" { inClass = false }
-					current.append(c)
+			i = s.index(after: i)  // advance past c; the escape case advances once more below
+			switch (inClass, c) {
+			case (true, "\\"):
+				current.append(c)
+				if i < s.endIndex {
+					current.append(s[i])
 					i = s.index(after: i)
 				}
-			} else {
-				if c == "[" {
-					inClass = true
-					current.append(c)
-					i = s.index(after: i)
-				} else if c == delimiter {
-					let trimmed = current.trimmingCharacters(in: .whitespaces)
-					if !trimmed.isEmpty { result.append(trimmed) }
-					current = ""
-					i = s.index(after: i)
-					while i < s.endIndex && s[i] == " " { i = s.index(after: i) }
-				} else {
-					current.append(c)
-					i = s.index(after: i)
-				}
+			case (true, "]"):
+				inClass = false
+				current.append(c)
+			case (false, "["):
+				inClass = true
+				current.append(c)
+			case (false, delimiter):
+				let trimmed = current.trimmingCharacters(in: .whitespaces)
+				if !trimmed.isEmpty { result.append(trimmed) }
+				current = ""
+			default:
+				current.append(c)
 			}
 		}
 		let trimmed = current.trimmingCharacters(in: .whitespaces)
