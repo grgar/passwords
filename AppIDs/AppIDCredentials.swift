@@ -47,14 +47,15 @@ struct AppIDCredentials: View {
 		}
 	}
 
-	var body: some View {
-		let responses = response
-			.filter {
-				searchText == "" ||
-				$0.id.localizedCaseInsensitiveContains(searchText) ||
-				$0.domains.joined(separator: "§").localizedCaseInsensitiveContains(searchText)
-			}
+	var responses: [AppEntry] { response
+		.filter {
+			searchText == "" ||
+			$0.id.localizedCaseInsensitiveContains(searchText) ||
+			$0.domains.joined(separator: "§").localizedCaseInsensitiveContains(searchText)
+		}
+	}
 
+	var body: some View {
 		List {
 			ForEach(responses) { entry in
 				AppEntryRow(entry: entry)

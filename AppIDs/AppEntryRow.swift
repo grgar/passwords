@@ -15,6 +15,25 @@ struct AppEntryRow: View {
 
 	var body: some View {
 		Label {
+			#if os(macOS)
+			HStack(alignment: .top) {
+				VStack(alignment: .leading) {
+					if let name = appInfo?.appName {
+						Text(name)
+							.font(.headline)
+					}
+					Text(entry.id)
+				}
+				Spacer()
+				VStack(alignment: .trailing) {
+					ForEach(entry.domains, id: \.self) { domain in
+						Text(domain)
+							.foregroundStyle(.secondary)
+					}
+				}
+			}
+			.padding(.horizontal)
+			#else
 			if let name = appInfo?.appName {
 				Text(name)
 			}
@@ -22,6 +41,7 @@ struct AppEntryRow: View {
 			ForEach(entry.domains, id: \.self) { domain in
 				Text(domain)
 			}
+			#endif
 		} icon: {
 			Group {
 				if let iconURL = appInfo?.iconURL {
@@ -41,5 +61,14 @@ struct AppEntryRow: View {
 			guard appInfo == nil else { return }
 			appInfo = await AppStoreInfo.fetch(bundleID: bundleID)
 		}
+		.padding(.bottom, 8)
+	}
+}
+#Preview {
+	List {
+		AppEntryRow(entry: .init(id: "P7SDVXUZPK.com.etrade.mobileproiphone", domains: ["etrade.com"]))
+		AppEntryRow(entry: .init(id: "com.example.App", domains: ["example.com"]))
+		AppEntryRow(entry: .init(id: "P7SDVXUZPK.com.etrade.mobileproiphone", domains: ["etrade.com"]))
+		AppEntryRow(entry: .init(id: "com.example.App", domains: ["example.com", "example.net"]))
 	}
 }
