@@ -12,37 +12,32 @@ struct Rule: Identifiable, Hashable {
 	var sumLength: Int { (self.minLength ?? 0) + (self.maxLength ?? 0) }
 
 	enum PasswordCharacter: LosslessStringConvertible, Hashable, CaseIterable, Comparable, Identifiable {
-		case lower, upper, digit, special, unicode, other(Set<Character>)
+		case lower, upper, digit, special, unicode, asciiPrintable, other(Set<Character>)
 
 		init?(_ description: String) {
 			switch description {
-			case "lower":
-				self = .lower
-			case "upper":
-				self = .upper
-			case "digit":
-				self = .digit
-			case "special":
-				self = .special
-			case "unicode":
-				self = .unicode
+			case "lower":           self = .lower
+			case "upper":           self = .upper
+			case "digit":           self = .digit
+			case "special":         self = .special
+			case "unicode":         self = .unicode
+			case "ascii-printable": self = .asciiPrintable
 			default:
 				guard description.hasPrefix("[") && description.hasSuffix("]") else { return nil }
 				var chars = Set<Character>()
 				var i = description.index(after: description.startIndex)
 				let end = description.index(before: description.endIndex)
 				while i < end {
-					if description[i] == "\\" {
-						let next = description.index(after: i)
-						if next < end {
-							chars.insert(description[next])
-							i = description.index(after: next)
-						} else {
-							i = next
+					let c = description[i]
+					i = description.index(after: i)
+					switch c {
+					case "\\":
+						if i < end {
+							chars.insert(description[i])
+							i = description.index(after: i)
 						}
-					} else {
-						chars.insert(description[i])
-						i = description.index(after: i)
+					default:
+						chars.insert(c)
 					}
 				}
 				self = .other(chars)
@@ -51,22 +46,23 @@ struct Rule: Identifiable, Hashable {
 
 		var description: String {
 			switch self {
-			case .lower: return "lower"
-			case .upper: return "upper"
-			case .digit: return "digit"
-			case .special: return "special"
-			case .unicode: return "unicode"
+			case .lower:          return "lower"
+			case .upper:          return "upper"
+			case .digit:          return "digit"
+			case .special:        return "special"
+			case .unicode:        return "unicode"
+			case .asciiPrintable: return "ascii-printable"
 			case let .other(set): return set.sorted().map(String.init).joined()
 			}
 		}
 
 		var symbol: String? {
 			switch self {
-			case .lower: return "textformat.abc"
-			case .upper: return "abc"
-			case .digit: return "textformat.123"
+			case .lower:   return "textformat.abc"
+			case .upper:   return "abc"
+			case .digit:   return "textformat.123"
 			case .special: return "command"
-			default: return nil
+			default:       return nil
 			}
 		}
 
@@ -74,14 +70,14 @@ struct Rule: Identifiable, Hashable {
 
 		var isPredefined: Bool {
 			switch self {
-			case .lower, .upper, .digit, .special, .unicode:
+			case .lower, .upper, .digit, .special, .unicode, .asciiPrintable:
 				return true
 			default:
 				return false
 			}
 		}
 
-		static let allCases: [Rule.PasswordCharacter] = [.upper, .lower, .digit, .special, .unicode, .other(.init())]
+		static let allCases: [Rule.PasswordCharacter] = [.upper, .lower, .digit, .special, .unicode, .asciiPrintable, .other(.init())]
 
 		static func < (lhs: Rule.PasswordCharacter, rhs: Rule.PasswordCharacter) -> Bool {
 			switch (lhs.isPredefined, rhs.isPredefined) {
